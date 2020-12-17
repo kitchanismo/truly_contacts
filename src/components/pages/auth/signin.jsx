@@ -1,12 +1,23 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {TextField, makeStyles, Typography } from '@material-ui/core';
+import MyButton from '../../ui/MyButton'
 
 const SignIn = () => {
-    return <>
-    <h1>Sign In</h1>
-      <Link to="/signup">to Sign Up</Link>
-     <Link to="/">to Home</Link>;
+    const classes = useStyles();
+return <>
+ <div className={classes.container}>
+        <Typography variant='h4'>Log In</Typography>
+        <TextField id="username" label="Username" />
+        <TextField id="password" type="password" label="Password" />
+        <MyButton className={classes.btn} variant="contained" color="primary">
+            Sign In
+        </MyButton>
+    </div>
   </>
 }
+
+const useStyles = makeStyles((theme) => ({
+    ...theme.styles,
+  }));
  
 export default SignIn;
