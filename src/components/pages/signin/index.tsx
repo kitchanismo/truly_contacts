@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { Form, Button, Grid, Segment, Label, Input } from 'semantic-ui-react'
+import { Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signin.module.css'
-import globalStyles from 'styles.module.css'
 import UserContext, { UserProps } from 'contexts/userContext'
-import MyForm, { MyFormProps, InputProps } from 'components/common/myForm'
+import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 
 export interface SignInProps {}
@@ -24,7 +23,7 @@ const SignIn: React.FC<SignInProps> = () => {
     }
   }
 
-  const form: MyFormProps<User> = {
+  const formProps: MyFormProps<User> = {
     state: {
       data: user,
       setData: setUser,
@@ -39,7 +38,7 @@ const SignIn: React.FC<SignInProps> = () => {
           <Label as='a' color='red' ribbon>
             Sign In
           </Label>
-          <MyForm {...form}>
+          <MyForm {...formProps}>
             {({ myInput, myButton }) => (
               <>
                 {myInput?.call(null, {

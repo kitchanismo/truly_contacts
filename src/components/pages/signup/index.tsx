@@ -1,16 +1,14 @@
 import * as React from 'react'
-import { Form, Button, Grid, Segment, Label } from 'semantic-ui-react'
+import { Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signup.module.css'
-import globalStyles from 'styles.module.css'
 import Context, { UserProps } from 'contexts/userContext'
+import MyForm, { MyFormProps } from 'components/common/myForm'
+import User from 'models/user'
 
 const SignUp: React.FC = () => {
   const { user, setUser, doRegister } = React.useContext<UserProps>(Context)
-  const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
-  const doSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsDisable(true)
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       const status = await doRegister(user)
       if (status === 201) {
@@ -21,15 +19,14 @@ const SignUp: React.FC = () => {
     } catch (error) {
       console.log(error)
     }
-    setIsDisable(false)
   }
 
-  const doChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.currentTarget
-    setUser({
-      ...user,
-      [name]: value,
-    })
+  const formProps: MyFormProps<User> = {
+    state: {
+      data: user,
+      setData: setUser,
+    },
+    onSubmit,
   }
 
   return (
@@ -39,56 +36,39 @@ const SignUp: React.FC = () => {
           <Label as='a' color='red' ribbon>
             Register
           </Label>
-          <Form onSubmit={doSubmit} className={globalStyles.formContainer}>
-            <Form.Field>
-              <label>Username</label>
-              <input
-                name='username'
-                type='text'
-                onChange={doChange}
-                value={user?.username}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>First Name</label>
-              <input
-                name='first_name'
-                type='text'
-                onChange={doChange}
-                value={user?.first_name}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Last Name</label>
-              <input
-                name='last_name'
-                type='text'
-                onChange={doChange}
-                value={user?.last_name}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Email</label>
-              <input
-                name='email'
-                type='email'
-                onChange={doChange}
-                value={user?.email}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input
-                name='password'
-                type='password'
-                onChange={doChange}
-                value={user?.password}
-              />
-            </Form.Field>
-            <Button disabled={isDisable} color='black' type='submit'>
-              {isDisable ? 'Submiting...' : 'Submit'}
-            </Button>
-          </Form>
+          <MyForm {...formProps}>
+            {({ myInput, myButton }) => (
+              <>
+                {myInput?.call(null, {
+                  value: user.username,
+                  name: 'username',
+                  label: 'Username',
+                })}
+                {myInput?.call(null, {
+                  value: user.first_name,
+                  name: 'first_name',
+                  label: 'Firstname',
+                })}
+                {myInput?.call(null, {
+                  value: user.last_name,
+                  name: 'last_name',
+                  label: 'Lastname',
+                })}
+                {myInput?.call(null, {
+                  value: user.email || '',
+                  name: 'email',
+                  label: 'Email',
+                })}
+                {myInput?.call(null, {
+                  value: user.password,
+                  type: 'password',
+                  name: 'password',
+                  label: 'Password',
+                })}
+                {myButton?.call(null)}
+              </>
+            )}
+          </MyForm>
         </Segment>
       </Grid.Column>
     </Grid>

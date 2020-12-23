@@ -27,7 +27,6 @@ export interface RenderProps {
 
 function MyForm<T>(props: MyFormProps<T>) {
   const { data, setData } = props.state
-
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
   const doChange = (e: React.ChangeEvent<HTMLInputElement>) => {

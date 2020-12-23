@@ -9,6 +9,6 @@ export interface UserProps {
   (): UserProps
 }
 
-const UserContext = React.createContext<any>({})
+const UserContext = React.createContext<any>(null)
 
 export default UserContext
