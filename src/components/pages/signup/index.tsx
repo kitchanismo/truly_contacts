@@ -16,10 +16,20 @@ export interface SignUpProps {}
 
 const SignUp: React.FC<SignUpProps> = () => {
   const { user, setUser, doRegister } = React.useContext<UserProps>(Context)
+  const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
-  const doSubmit = (e: React.FormEvent<HTMLFormElement>, data: FormProps) => {
+  const doSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    doRegister(user)
+    setIsDisable(true)
+    try {
+      const status = await doRegister(user)
+      if (status === 201) {
+        alert('Successfully Register!')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    setIsDisable(false)
   }
 
   const doChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,8 +93,8 @@ const SignUp: React.FC<SignUpProps> = () => {
                 value={user?.password}
               />
             </Form.Field>
-            <Button color='black' type='submit'>
-              Submit
+            <Button disabled={isDisable} color='black' type='submit'>
+              {isDisable ? 'Submiting...' : 'Submit'}
             </Button>
           </Form>
         </Segment>

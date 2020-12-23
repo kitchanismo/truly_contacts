@@ -12,10 +12,16 @@ const useUser = () => {
   })
 
   const doRegister = (user: User) => {
-    http.post('/auth/register', user).then((data) => console.log(data))
+    return http
+      .post('/auth/register', user)
+      .then((data) => data.status)
+      .catch((error) => error.response.status)
   }
   const doSignin = (user: User) => {
-    http.post('/auth/login', user).then((data) => console.log(data.data))
+    return http
+      .post('/auth/login', user)
+      .then((data) => data.status)
+      .catch((error) => error.response.status)
   }
 
   return { doRegister, doSignin, user, setUser }
