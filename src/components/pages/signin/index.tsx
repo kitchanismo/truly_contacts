@@ -2,12 +2,12 @@ import * as React from 'react'
 import { Form, Button, Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signin.module.css'
 import globalStyles from 'styles.module.css'
-import Context, { UserProps } from 'providers/context'
+import UserContext, { UserProps } from 'contexts/userContext'
 
 export interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
-  const { user, setUser, doSignin } = React.useContext<UserProps>(Context)
+  const { user, setUser, doSignin } = React.useContext<UserProps>(UserContext)
 
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 

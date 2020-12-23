@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Form, Button, Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signup.module.css'
 import globalStyles from 'styles.module.css'
-import Context, { UserProps } from 'providers/context'
+import Context, { UserProps } from 'contexts/userContext'
 
 const SignUp: React.FC = () => {
   const { user, setUser, doRegister } = React.useContext<UserProps>(Context)
