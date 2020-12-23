@@ -1,20 +1,10 @@
 import * as React from 'react'
-import {
-  Form,
-  Button,
-  Grid,
-  Segment,
-  Label,
-  FormProps,
-} from 'semantic-ui-react'
+import { Form, Button, Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signup.module.css'
 import globalStyles from 'styles.module.css'
 import Context, { UserProps } from 'providers/context'
-import User from 'models/user'
 
-export interface SignUpProps {}
-
-const SignUp: React.FC<SignUpProps> = () => {
+const SignUp: React.FC = () => {
   const { user, setUser, doRegister } = React.useContext<UserProps>(Context)
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
@@ -24,7 +14,9 @@ const SignUp: React.FC<SignUpProps> = () => {
     try {
       const status = await doRegister(user)
       if (status === 201) {
-        alert('Successfully Register!')
+        alert('Registered!')
+      } else if (status === 400) {
+        alert('Invalid Credentials')
       }
     } catch (error) {
       console.log(error)
