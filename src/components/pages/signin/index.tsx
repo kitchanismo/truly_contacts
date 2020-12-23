@@ -4,15 +4,20 @@ import styles from './signin.module.css'
 import UserContext, { UserProps } from 'contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
+import Joi from 'joi'
 
 export interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
-  const { user, setUser, doSignin } = React.useContext<UserProps>(UserContext)
+  const {
+    user: { username, password, ...user },
+    setUser,
+    doSignin,
+  } = React.useContext<UserProps>(UserContext)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
-      const status = await doSignin(user)
+      const status = await doSignin({ username, password })
       if (status === 200) {
         alert('Success login!')
       } else if (status === 401) {
@@ -25,8 +30,12 @@ const SignIn: React.FC<SignInProps> = () => {
 
   const formProps: MyFormProps<User> = {
     state: {
-      data: user,
+      data: { username, password },
       setData: setUser,
+    },
+    schema: {
+      username: Joi.string().alphanum().min(3).max(30).required(),
+      password: Joi.string().min(6).required(),
     },
     onSubmit,
   }
@@ -42,12 +51,12 @@ const SignIn: React.FC<SignInProps> = () => {
             {({ myInput, myButton }) => (
               <>
                 {myInput?.call(null, {
-                  value: user.username,
+                  value: username,
                   name: 'username',
                   label: 'Username',
                 })}
                 {myInput?.call(null, {
-                  value: user.password,
+                  value: password,
                   type: 'password',
                   name: 'password',
                   label: 'Password',

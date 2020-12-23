@@ -1,8 +1,8 @@
 import { Route, Redirect, Switch } from 'react-router-dom'
 
-import SignIn from 'components/pages/signin/index'
-import SignUp from 'components/pages/signup/index'
-import Home from 'components/pages/home/index'
+import SignIn from 'components/pages/signin'
+import SignUp from 'components/pages/signup'
+import Home from 'components/pages/home'
 
 const Routes = () => {
   return (
