@@ -4,10 +4,7 @@ import globalStyles from 'styles.module.css'
 import { Button, Form } from 'semantic-ui-react'
 
 export interface MyFormProps<T> {
-  state: {
-    data: T
-    setData: React.Dispatch<React.SetStateAction<T>>
-  }
+  state: [data: T, setData: React.Dispatch<React.SetStateAction<T>>]
   schema: Object
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
   children?: (props: RenderProps) => JSX.Element
@@ -27,7 +24,7 @@ export interface RenderProps {
 }
 
 function MyForm<T>(props: MyFormProps<T>) {
-  const { data, setData } = props.state
+  const [data, setData] = props.state
 
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
@@ -45,11 +42,13 @@ function MyForm<T>(props: MyFormProps<T>) {
     const _schema = Joi.object(props.schema).options({ abortEarly: false })
     const { error } = _schema.validate(data)
 
+    console.log(error)
+
     if (!error) return null
 
     const _errors: any = {}
 
-    for (let item of error.details) _errors[item.path[0]] = item.message
+    error.details.forEach((item) => (_errors[item.path[0]] = item.message))
 
     return _errors
   }
@@ -67,12 +66,13 @@ function MyForm<T>(props: MyFormProps<T>) {
       return
     }
 
-    setErrors({})
-    setData({} as T)
-
     props.onSubmit
       ?.call(null, e)
-      .then(() => setIsDisable(false))
+      .then(() => {
+        setErrors({})
+        setData({} as T)
+        setIsDisable(false)
+      })
       .catch(() => setIsDisable(true))
   }
 

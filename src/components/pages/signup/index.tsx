@@ -4,10 +4,12 @@ import styles from './signup.module.css'
 import Context, { UserProps } from 'contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
-import Joi from 'joi'
+import schema from './schema'
 
 const SignUp: React.FC = () => {
-  const { user, setUser, doRegister } = React.useContext<UserProps>(Context)
+  const { state, doRegister } = React.useContext<UserProps>(Context)
+
+  const [user, setUser] = state
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -23,20 +25,8 @@ const SignUp: React.FC = () => {
   }
 
   const formProps: MyFormProps<User> = {
-    state: {
-      data: user,
-      setData: setUser,
-    },
-    schema: {
-      username: Joi.string().alphanum().min(3).max(30).required(),
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      email: Joi.string().email({
-        minDomainSegments: 2,
-        tlds: { allow: ['com', 'net'] },
-      }),
-      password: Joi.string().min(6).required(),
-    },
+    state,
+    schema,
     onSubmit,
   }
 

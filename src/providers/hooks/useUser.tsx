@@ -4,7 +4,7 @@ import http from 'utils/httpService'
 import { UserProps } from 'contexts/userContext'
 
 const useUser = () => {
-  const [user, setUser] = React.useState<User>({
+  const state = React.useState<User>({
     username: '',
     first_name: '',
     last_name: '',
@@ -29,7 +29,7 @@ const useUser = () => {
       .catch((error) => error.response.status)
   }
 
-  return { doRegister, doSignin, user, setUser } as UserProps
+  return { doRegister, doSignin, state } as UserProps
 }
 
 export default useUser
