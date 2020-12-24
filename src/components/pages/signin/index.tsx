@@ -24,7 +24,7 @@ const SignIn: React.FC<SignInProps> = () => {
         alert('Invalid Username/Password!')
       }
     } catch (error) {
-      console.log('Network Error!')
+      alert('Network Error!')
     }
   }
 
@@ -35,33 +35,31 @@ const SignIn: React.FC<SignInProps> = () => {
   }
 
   return (
-    <Grid centered>
-      <Grid.Column className={styles.container}>
-        <Segment raised>
-          <Label as='a' color='red' ribbon>
-            Sign In
-          </Label>
-          <MyForm {...formProps}>
-            {({ myInput, myButton }) => (
-              <>
-                {myInput({
-                  value: username,
-                  name: 'username',
-                  label: 'Username',
-                })}
-                {myInput({
-                  value: password,
-                  type: 'password',
-                  name: 'password',
-                  label: 'Password',
-                })}
-                {myButton()}
-              </>
-            )}
-          </MyForm>
-        </Segment>
-      </Grid.Column>
-    </Grid>
+    <Grid.Column className={styles.container}>
+      <Segment raised>
+        <Label as='a' color='red' ribbon>
+          Sign In
+        </Label>
+        <MyForm {...formProps}>
+          {({ myInput, myButton }) => (
+            <>
+              {myInput({
+                value: username,
+                name: 'username',
+                label: 'Username',
+              })}
+              {myInput({
+                value: password,
+                type: 'password',
+                name: 'password',
+                label: 'Password',
+              })}
+              {myButton()}
+            </>
+          )}
+        </MyForm>
+      </Segment>
+    </Grid.Column>
   )
 }
 

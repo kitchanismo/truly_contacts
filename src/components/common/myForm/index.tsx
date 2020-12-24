@@ -8,6 +8,7 @@ export interface MyFormProps<T> {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
   schema?: {}
   children?: (props: RenderProps) => JSX.Element
+  clearOnSubmit?: boolean
 }
 
 export interface InputProps {
@@ -56,7 +57,7 @@ function MyForm<T>(props: MyFormProps<T>) {
     return _errors
   }
 
-  const doSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const doSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const hasError = validate()
@@ -73,7 +74,7 @@ function MyForm<T>(props: MyFormProps<T>) {
       .onSubmit(e)
       .then(() => {
         setErrors({})
-        setData({} as T)
+        if (props.clearOnSubmit) setData({} as T)
         setIsDisable(false)
       })
       .catch(() => setIsDisable(true))
