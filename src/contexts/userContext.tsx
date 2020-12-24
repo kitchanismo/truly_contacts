@@ -3,8 +3,8 @@ import React from 'react'
 
 export interface UserProps {
   state: [User, React.Dispatch<React.SetStateAction<User>>]
-  doRegister: (user: User) => Promise<any>
-  doSignin: (user: User) => Promise<any>
+  onRegister: (user: User) => Promise<any>
+  onSignin: (user: User) => Promise<any>
   (): UserProps
 }
 

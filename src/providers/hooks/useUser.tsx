@@ -12,13 +12,13 @@ const useUser = () => {
     password: '',
   })
 
-  const doRegister = (user: User) => {
+  const onRegister = (user: User) => {
     return http
       .post('/auth/register', user)
       .then((data) => data.status)
       .catch((error) => error.response.status)
   }
-  const doSignin = (user: User) => {
+  const onSignin = (user: User) => {
     return http
       .post('/auth/login', user)
       .then((data) => {
@@ -29,7 +29,7 @@ const useUser = () => {
       .catch((error) => error.response.status)
   }
 
-  return { doRegister, doSignin, state } as UserProps
+  return { onRegister, onSignin, state } as UserProps
 }
 
 export default useUser

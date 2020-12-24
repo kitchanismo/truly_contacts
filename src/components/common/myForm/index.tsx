@@ -6,21 +6,17 @@ import { Button, Form } from 'semantic-ui-react'
 export interface MyFormProps<T> {
   state: [T, React.Dispatch<React.SetStateAction<T>>]
   onSubmit: () => Promise<any>
-  schema?: {}
+  validator?: {}
   children?: (props: RenderProps) => JSX.Element
   clearOnSubmit?: boolean
 }
 
 export interface InputProps {
-  value?: string
+  value?: string | Joi.StringSchema
   name: string
   placeholder?: string
   type?: string
   label: string
-}
-
-export interface ButtonProps {
-  color?: string
 }
 
 export interface RenderProps {
@@ -43,10 +39,10 @@ function MyForm<T>(props: MyFormProps<T>) {
     })
   }
 
-  const validate = () => {
-    const _schema = Joi.object(props.schema).options({ abortEarly: false })
+  const onValidate = () => {
+    const schema = Joi.object(props.validator).options({ abortEarly: false })
 
-    const { error } = _schema.validate(data)
+    const { error } = schema.validate(data)
 
     if (!error) return null
 
@@ -57,10 +53,10 @@ function MyForm<T>(props: MyFormProps<T>) {
     return _errors
   }
 
-  const doSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const hasError = validate()
+    const hasError = onValidate()
 
     setIsDisable(true)
 
@@ -111,7 +107,7 @@ function MyForm<T>(props: MyFormProps<T>) {
   }
 
   return (
-    <Form onSubmit={doSubmit} className={globalStyles.formContainer}>
+    <Form onSubmit={onSubmit} className={globalStyles.formContainer}>
       {props.children?.call(null, { myInput, myButton } as RenderProps)}
     </Form>
   )

@@ -4,20 +4,20 @@ import styles from './signin.module.css'
 import UserContext, { UserProps } from 'contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
-import schema from './schema'
+import validator from './validator'
 
 export interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
-  const { state, doSignin } = React.useContext<UserProps>(UserContext)
+  const { state, onSignin } = React.useContext<UserProps>(UserContext)
 
   const [user] = state
 
   const { username, password } = user
 
-  async function onSubmit() {
+  const onSubmit = async () => {
     try {
-      const status = await doSignin(user)
+      const status = await onSignin(user)
       if (status === 200) {
         alert('Success login!')
       } else if (status === 401) {
@@ -30,7 +30,7 @@ const SignIn: React.FC<SignInProps> = () => {
 
   const formProps: MyFormProps<User> = {
     state,
-    schema,
+    validator,
     onSubmit,
   }
 

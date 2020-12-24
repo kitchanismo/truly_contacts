@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import User from 'models/user'
 import { lettersOnly } from 'utils/helper'
 
 export default {
@@ -18,4 +19,4 @@ export default {
     .max(254)
     .label('Email'),
   password: Joi.string().min(8).max(65).required().label('Password'),
-}
+} as User

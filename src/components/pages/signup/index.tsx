@@ -1,20 +1,19 @@
 import * as React from 'react'
 import { Grid, Segment, Label } from 'semantic-ui-react'
-import styles from './signup.module.css'
 import Context, { UserProps } from 'contexts/userContext'
 import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
-import schema from './schema'
-import globalStyles from 'styles.module.css'
+import validator from './validator'
+import styles from './signup.module.css'
 
 const SignUp: React.FC = () => {
-  const { state, doRegister } = React.useContext<UserProps>(Context)
+  const { state, onRegister } = React.useContext<UserProps>(Context)
 
   const [user, setUser] = state
 
   const onSubmit = async () => {
     try {
-      const status = await doRegister(user)
+      const status = await onRegister(user)
       if (status === 201) {
         alert('Registered!')
         setUser({} as User)
@@ -28,7 +27,7 @@ const SignUp: React.FC = () => {
 
   const formProps: MyFormProps<User> = {
     state,
-    schema,
+    validator,
     onSubmit,
   }
 
