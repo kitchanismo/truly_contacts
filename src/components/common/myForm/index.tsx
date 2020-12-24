@@ -4,8 +4,8 @@ import globalStyles from 'styles.module.css'
 import { Button, Form } from 'semantic-ui-react'
 
 export interface MyFormProps<T> {
-  state: [data: T, setData: React.Dispatch<React.SetStateAction<T>>]
-  schema: Object
+  state: [T, React.Dispatch<React.SetStateAction<T>>]
+  schema?: Object
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
   children?: (props: RenderProps) => JSX.Element
 }
@@ -19,8 +19,8 @@ export interface InputProps {
 }
 
 export interface RenderProps {
-  myInput?: (input: InputProps) => JSX.Element
-  myButton?: () => JSX.Element
+  myInput: (input: InputProps) => JSX.Element
+  myButton: () => JSX.Element
 }
 
 function MyForm<T>(props: MyFormProps<T>) {
@@ -40,9 +40,8 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const validate = () => {
     const _schema = Joi.object(props.schema).options({ abortEarly: false })
-    const { error } = _schema.validate(data)
 
-    console.log(error)
+    const { error } = _schema.validate(data)
 
     if (!error) return null
 

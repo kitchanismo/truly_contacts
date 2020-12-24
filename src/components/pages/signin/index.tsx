@@ -11,7 +11,7 @@ export interface SignInProps {}
 const SignIn: React.FC<SignInProps> = () => {
   const { state, doSignin } = React.useContext<UserProps>(UserContext)
 
-  const [user, setUser] = state
+  const [user] = state
 
   const { username, password } = user
 
@@ -44,18 +44,18 @@ const SignIn: React.FC<SignInProps> = () => {
           <MyForm {...formProps}>
             {({ myInput, myButton }) => (
               <>
-                {myInput?.call(null, {
+                {myInput({
                   value: username,
                   name: 'username',
                   label: 'Username',
                 })}
-                {myInput?.call(null, {
+                {myInput({
                   value: password,
                   type: 'password',
                   name: 'password',
                   label: 'Password',
                 })}
-                {myButton?.call(null)}
+                {myButton()}
               </>
             )}
           </MyForm>

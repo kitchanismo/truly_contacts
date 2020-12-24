@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import { lettersOnly } from 'utils/helper'
 
 export default {
   username: Joi.string()
@@ -7,8 +8,8 @@ export default {
     .max(150)
     .required()
     .label('Username'),
-  first_name: Joi.string().min(2).max(255).required().label('Firstname'),
-  last_name: Joi.string().min(2).max(255).required().label('Lastname'),
+  first_name: lettersOnly('Firstname').min(2).max(255).required(),
+  last_name: lettersOnly('Lastname').min(2).max(255).required(),
   email: Joi.string()
     .email({
       minDomainSegments: 2,

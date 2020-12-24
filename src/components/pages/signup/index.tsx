@@ -40,33 +40,34 @@ const SignUp: React.FC = () => {
           <MyForm {...formProps}>
             {({ myInput, myButton }) => (
               <>
-                {myInput?.call(null, {
+                {myInput({
                   value: user.username,
                   name: 'username',
                   label: 'Username',
                 })}
-                {myInput?.call(null, {
+                {myInput({
                   value: user.first_name,
                   name: 'first_name',
                   label: 'Firstname',
                 })}
-                {myInput?.call(null, {
+                {myInput({
                   value: user.last_name,
                   name: 'last_name',
                   label: 'Lastname',
                 })}
-                {myInput?.call(null, {
+                {myInput({
+                  type: 'email',
                   value: user.email || '',
                   name: 'email',
                   label: 'Email',
                 })}
-                {myInput?.call(null, {
+                {myInput({
                   value: user.password,
                   type: 'password',
                   name: 'password',
                   label: 'Password',
                 })}
-                {myButton?.call(null)}
+                {myButton()}
               </>
             )}
           </MyForm>
