@@ -5,7 +5,7 @@ import { Button, Form } from 'semantic-ui-react'
 
 export interface MyFormProps<T> {
   state: [T, React.Dispatch<React.SetStateAction<T>>]
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
+  onSubmit: () => Promise<any>
   schema?: {}
   children?: (props: RenderProps) => JSX.Element
   clearOnSubmit?: boolean
@@ -71,7 +71,7 @@ function MyForm<T>(props: MyFormProps<T>) {
     }
 
     props
-      .onSubmit(e)
+      .onSubmit()
       .then(() => {
         setErrors({})
         if (props.clearOnSubmit) setData({} as T)

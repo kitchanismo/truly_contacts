@@ -12,7 +12,7 @@ const SignUp: React.FC = () => {
 
   const [user, setUser] = state
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async () => {
     try {
       const status = await doRegister(user)
       if (status === 201) {
@@ -66,7 +66,7 @@ const SignUp: React.FC = () => {
   return (
     <Grid.Column className={styles.container}>
       <Segment raised>
-        <Label as='a' color='red' ribbon>
+        <Label as='a' color='red' size='large' ribbon>
           Register
         </Label>
         <MyForm {...formProps}>

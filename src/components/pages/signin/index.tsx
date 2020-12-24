@@ -15,7 +15,7 @@ const SignIn: React.FC<SignInProps> = () => {
 
   const { username, password } = user
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function onSubmit() {
     try {
       const status = await doSignin(user)
       if (status === 200) {
@@ -37,7 +37,7 @@ const SignIn: React.FC<SignInProps> = () => {
   return (
     <Grid.Column className={styles.container}>
       <Segment raised>
-        <Label as='a' color='red' ribbon>
+        <Label as='a' color='red' size='large' ribbon>
           Sign In
         </Label>
         <MyForm {...formProps}>
