@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Joi from 'joi'
 import globalStyles from 'styles.module.css'
 import { Button, Form } from 'semantic-ui-react'
 
 export interface MyFormProps<T> {
   state: [T, React.Dispatch<React.SetStateAction<T>>]
-  schema?: Object
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<any>
+  schema?: {}
   children?: (props: RenderProps) => JSX.Element
 }
 
@@ -16,6 +16,10 @@ export interface InputProps {
   placeholder?: string
   type?: string
   label: string
+}
+
+export interface ButtonProps {
+  color?: string
 }
 
 export interface RenderProps {
@@ -65,8 +69,8 @@ function MyForm<T>(props: MyFormProps<T>) {
       return
     }
 
-    props.onSubmit
-      ?.call(null, e)
+    props
+      .onSubmit(e)
       .then(() => {
         setErrors({})
         setData({} as T)
@@ -99,7 +103,7 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const myButton = () => {
     return (
-      <Button disabled={isDisable} color='black' type='submit'>
+      <Button fluid disabled={isDisable} color='black' type='submit'>
         {isDisable ? 'Submiting...' : 'Submit'}
       </Button>
     )
