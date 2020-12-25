@@ -1,7 +1,7 @@
 import * as React from 'react'
 import User from 'models/user'
 import http from 'utils/http'
-import { UserProps } from 'contexts/userContext'
+import { UserProps } from 'providers/contexts/userContext'
 
 const useUser = () => {
   const state = React.useState<User>({

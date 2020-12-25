@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Grid, Segment, Label } from 'semantic-ui-react'
-import Context, { UserProps } from 'contexts/userContext'
+import Context, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'

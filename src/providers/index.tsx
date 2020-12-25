@@ -1,5 +1,5 @@
 import * as React from 'react'
-import UserContext from '../contexts/userContext'
+import UserContext from './contexts/userContext'
 import useUser from './hooks/useUser'
 
 const Provider: React.FC = (props) => {

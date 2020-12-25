@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signin.module.css'
-import UserContext, { UserProps } from 'contexts/userContext'
+import UserContext, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
