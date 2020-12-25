@@ -22,7 +22,7 @@ const SignIn: React.FC<SignInProps> = () => {
         alert('Invalid Username/Password!')
       }
     } catch (error) {
-      alert('Network Error!')
+      alert('Network/Server Error! ' + error)
     }
   }
 

@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Switch, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Menu, MenuItemProps } from 'semantic-ui-react'
-import styles from './nav.module.css'
 
 const Nav: React.FC = () => {
   const history = useHistory()
