@@ -3,10 +3,10 @@ import UserContext from '../contexts/userContext'
 import useUser from './hooks/useUser'
 
 const Provider: React.FC = (props) => {
-  const user = useUser()
+  const userProps = useUser()
 
   return (
-    <UserContext.Provider value={{ ...user }}>
+    <UserContext.Provider value={{ ...userProps }}>
       {props.children}
     </UserContext.Provider>
   )

@@ -56,12 +56,12 @@ function MyForm<T>(props: MyFormProps<T>) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const hasError = onValidate()
+    const hasErrors = onValidate()
 
     setIsDisable(true)
 
-    if (hasError) {
-      setErrors(hasError)
+    if (hasErrors) {
+      setErrors(hasErrors)
       setIsDisable(false)
       return
     }

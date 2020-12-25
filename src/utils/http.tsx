@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { baseUrl } from 'configs/index.json'
 
 axios.interceptors.request.use((config) => {
-  config.baseURL = 'https://truly-contacts.herokuapp.com/api/'
+  config.baseURL = baseUrl
   return config
 })
 
