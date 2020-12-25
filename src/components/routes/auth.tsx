@@ -15,7 +15,7 @@ const AuthRoute: React.FC<RouteProps> = ({
     <Route
       {...rest}
       render={(props) => {
-        if (!isUserAuthenticated())
+        if (!isUserAuthenticated)
           return (
             <Redirect
               to={{

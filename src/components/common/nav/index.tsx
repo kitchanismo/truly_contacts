@@ -1,9 +1,14 @@
+import UserContext, { UserProps } from 'providers/contexts/userContext'
 import * as React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Menu, MenuItemProps } from 'semantic-ui-react'
 
 const Nav: React.FC = () => {
   const history = useHistory()
+
+  const { isUserAuthenticated, onSignout } = React.useContext<UserProps>(
+    UserContext
+  )
 
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 
@@ -41,6 +46,37 @@ const Nav: React.FC = () => {
     }
   }
 
+  const renderMenus = () => {
+    if (isUserAuthenticated)
+      return (
+        <Menu.Item
+          position='right'
+          name='logout'
+          active={activeItem === 'logout'}
+          onClick={() => {
+            onSignout()
+            history.push('/')
+          }}
+        />
+      )
+
+    return (
+      <>
+        <Menu.Item
+          position='right'
+          name='Sign In'
+          active={activeItem === 'Sign In'}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          name='Register'
+          active={activeItem === 'Register'}
+          onClick={handleItemClick}
+        />
+      </>
+    )
+  }
+
   return (
     <Menu color='red' pointing secondary>
       <Menu.Item
@@ -48,22 +84,7 @@ const Nav: React.FC = () => {
         active={activeItem === 'Truly Contacts'}
         onClick={handleItemClick}
       />
-      <Menu.Item
-        position='right'
-        name='Sign In'
-        active={activeItem === 'Sign In'}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        name='Register'
-        active={activeItem === 'Register'}
-        onClick={handleItemClick}
-      />
-      {/* <Menu.Item
-        name='logout'
-        active={activeItem === 'logout'}
-        onClick={handleItemClick}
-      /> */}
+      {renderMenus()}
     </Menu>
   )
 }

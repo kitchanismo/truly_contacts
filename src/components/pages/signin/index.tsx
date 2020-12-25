@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './signin.module.css'
 import UserContext, { UserProps } from 'providers/contexts/userContext'
@@ -9,6 +10,7 @@ import validator from './validator'
 export interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
+  const history = useHistory()
   const { state, onSignin } = React.useContext<UserProps>(UserContext)
 
   const [user] = state
@@ -18,6 +20,7 @@ const SignIn: React.FC<SignInProps> = () => {
       const status = await onSignin(user)
       if (status === 200) {
         alert('Success login!')
+        history.replace('/contacts')
       } else if (status === 401) {
         alert('Invalid Username/Password!')
       }

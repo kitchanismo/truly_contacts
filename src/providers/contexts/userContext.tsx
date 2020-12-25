@@ -5,7 +5,8 @@ export interface UserProps {
   state: [User, React.Dispatch<React.SetStateAction<User>>]
   onRegister: (user: User) => Promise<any>
   onSignin: (user: User) => Promise<any>
-  isUserAuthenticated: () => boolean
+  isUserAuthenticated: boolean
+  onSignout: () => void
   (): UserProps
 }
 

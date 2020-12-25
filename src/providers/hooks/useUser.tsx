@@ -13,6 +13,10 @@ const useUser = () => {
     password: '',
   })
 
+  const [isUserAuthenticated, setIsUserAuthenticated] = React.useState<boolean>(
+    getDecodeToken() ? true : false
+  )
+
   const onRegister = (user: User) => {
     return http
       .post('/auth/register', user)
@@ -24,14 +28,24 @@ const useUser = () => {
       .post('/auth/login', user)
       .then((data) => {
         localStorage.setItem('access-token', data.data.token)
+        setIsUserAuthenticated(true)
         return data.status
       })
       .catch((error) => error.response.status)
   }
 
-  const isUserAuthenticated = () => (getDecodeToken() ? true : false)
-
-  return { isUserAuthenticated, onRegister, onSignin, state } as UserProps
+  const onSignout = () => {
+    localStorage.removeItem('access-token')
+    localStorage.removeItem('refresh-token')
+    setIsUserAuthenticated(false)
+  }
+  return {
+    onSignout,
+    isUserAuthenticated,
+    onRegister,
+    onSignin,
+    state,
+  } as UserProps
 }
 
 export default useUser
