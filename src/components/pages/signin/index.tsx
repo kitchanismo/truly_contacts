@@ -13,8 +13,6 @@ const SignIn: React.FC<SignInProps> = () => {
 
   const [user] = state
 
-  const { username, password } = user
-
   const onSubmit = async () => {
     try {
       const status = await onSignin(user)
@@ -44,12 +42,12 @@ const SignIn: React.FC<SignInProps> = () => {
           {({ myInput, myButton }) => (
             <>
               {myInput({
-                value: username,
+                value: user.username,
                 name: 'username',
                 label: 'Username',
               })}
               {myInput({
-                value: password,
+                value: user.password,
                 type: 'password',
                 name: 'password',
                 label: 'Password',
