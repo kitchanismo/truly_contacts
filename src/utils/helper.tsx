@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import jwtDecode from 'jwt-decode'
 
 export const lettersOnly = (label: string) => {
   return Joi.string()
@@ -19,4 +20,16 @@ export const lettersOnly = (label: string) => {
       })
       return errors
     })
+}
+
+export const getDecodeToken = () => {
+  const token = localStorage.getItem('access-token')
+
+  try {
+    if (token) {
+      return jwtDecode<Object>(token)
+    }
+  } catch (error) {
+    return null
+  }
 }

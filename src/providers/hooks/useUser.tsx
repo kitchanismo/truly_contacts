@@ -2,6 +2,7 @@ import * as React from 'react'
 import User from 'models/user'
 import http from 'utils/http'
 import { UserProps } from 'providers/contexts/userContext'
+import { getDecodeToken } from 'utils/helper'
 
 const useUser = () => {
   const state = React.useState<User>({
@@ -22,14 +23,15 @@ const useUser = () => {
     return http
       .post('/auth/login', user)
       .then((data) => {
-        //to save in localStorage
-        console.log(data.data.token)
+        localStorage.setItem('access-token', data.data.token)
         return data.status
       })
       .catch((error) => error.response.status)
   }
 
-  return { onRegister, onSignin, state } as UserProps
+  const isUserAuthenticated = () => (getDecodeToken() ? true : false)
+
+  return { isUserAuthenticated, onRegister, onSignin, state } as UserProps
 }
 
 export default useUser

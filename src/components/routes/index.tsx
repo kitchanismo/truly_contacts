@@ -1,16 +1,26 @@
 import { Route, Redirect, Switch } from 'react-router-dom'
 
+//can only be access when user is sigiin
+import AuthRoute from './auth'
+//can only be access when user is signout
+import GuestRoute from './guest'
+
 import SignIn from 'components/pages/signin'
 import SignUp from 'components/pages/signup'
 import Home from 'components/pages/home'
+import Contact from 'components/pages/contacts'
+import NotFound from 'components/pages/notFound'
 
 const Routes = () => {
   return (
     <Switch>
-      <Route path='/signin' component={SignIn} />
-      <Route path='/signup' component={SignUp} />
+      <AuthRoute path='/contacts' component={Contact} />
+      <GuestRoute path='/signup' component={SignUp} />
+      <GuestRoute path='/signin' component={SignIn} />
       <Route path='/home' component={Home} />
+      <Route path='/not-found' component={NotFound} />
       <Redirect from='/' exact to='/home' />
+      <Redirect to='/not-found' />
     </Switch>
   )
 }
