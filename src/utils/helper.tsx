@@ -1,5 +1,6 @@
 import Joi from 'joi'
 import jwtDecode from 'jwt-decode'
+import User from 'models/user'
 
 export const lettersOnly = (label: string) => {
   return Joi.string()
@@ -22,12 +23,15 @@ export const lettersOnly = (label: string) => {
     })
 }
 
+export const nameCapitalize = (name: string) =>
+  name.charAt(0).toUpperCase() + name.slice(1)
+
 export const getDecodeToken = () => {
   const token = localStorage.getItem('access-token')
 
   try {
     if (token) {
-      return jwtDecode<Object>(token)
+      return jwtDecode<User>(token)
     }
   } catch (error) {
     return null

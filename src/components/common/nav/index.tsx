@@ -1,78 +1,75 @@
 import UserContext, { UserProps } from 'providers/contexts/userContext'
 import * as React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Menu, MenuItemProps } from 'semantic-ui-react'
+import { Label, Menu, MenuItemProps } from 'semantic-ui-react'
+import { nameCapitalize } from 'utils/helper'
 
 const Nav: React.FC = () => {
   const history = useHistory()
 
-  const { isUserAuthenticated, onSignout } = React.useContext<UserProps>(
-    UserContext
-  )
+  const {
+    isUserAuthenticated,
+    onSignout,
+    currentUser,
+  } = React.useContext<UserProps>(UserContext)
 
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 
   React.useEffect(() => {
-    setActiveItem(nameMenu(history.location.pathname))
+    setActiveItem(history.location.pathname.substring(0))
   }, [])
 
   const handleItemClick = (e: any, input: MenuItemProps) => {
     setActiveItem(input.name)
-    history.push(pathName('' + input.name))
-  }
-
-  const nameMenu = (pathname: string) => {
-    switch (pathname) {
-      case '/home':
-        return 'Truly Contacts'
-      case '/signin':
-        return 'Sign In'
-      case '/signup':
-        return 'Register'
-      default:
-        return ''
-    }
-  }
-  const pathName = (name: string) => {
-    switch (name) {
-      case 'Truly Contacts':
-        return '/home'
-      case 'Sign In':
-        return '/signin'
-      case 'Register':
-        return '/signup'
-      default:
-        return ''
-    }
+    history.push('/' + input.name)
   }
 
   const renderMenus = () => {
     if (isUserAuthenticated)
       return (
-        <Menu.Item
-          position='right'
-          name='logout'
-          active={activeItem === 'logout'}
-          onClick={() => {
-            onSignout()
-            history.push('/')
-          }}
-        />
+        <>
+          <Menu.Menu position='right'>
+            <Menu.Item
+              color='red'
+              name='contacts'
+              active={activeItem === 'contacts'}
+              onClick={handleItemClick}
+            >
+              {nameCapitalize(currentUser())}
+            </Menu.Item>
+
+            <Menu.Item
+              position='right'
+              name='logout'
+              active={activeItem === 'logout'}
+              onClick={() => {
+                onSignout()
+                history.replace('/')
+              }}
+            >
+              Logout
+            </Menu.Item>
+          </Menu.Menu>
+        </>
       )
 
     return (
       <>
         <Menu.Item
           position='right'
-          name='Sign In'
-          active={activeItem === 'Sign In'}
+          name='signin'
+          active={activeItem === 'signin'}
           onClick={handleItemClick}
-        />
+        >
+          Sign In
+        </Menu.Item>
         <Menu.Item
-          name='Register'
-          active={activeItem === 'Register'}
+          name='signup'
+          active={activeItem === 'signup'}
           onClick={handleItemClick}
-        />
+        >
+          Sign Up
+        </Menu.Item>
       </>
     )
   }
@@ -80,10 +77,12 @@ const Nav: React.FC = () => {
   return (
     <Menu color='red' pointing secondary>
       <Menu.Item
-        name='Truly Contacts'
-        active={activeItem === 'Truly Contacts'}
+        name='home'
+        active={activeItem === 'home'}
         onClick={handleItemClick}
-      />
+      >
+        Home
+      </Menu.Item>
       {renderMenus()}
     </Menu>
   )

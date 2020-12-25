@@ -1,3 +1,4 @@
+import Joi from 'joi'
 import User from 'models/user'
 import React from 'react'
 
@@ -7,6 +8,7 @@ export interface UserProps {
   onSignin: (user: User) => Promise<any>
   isUserAuthenticated: boolean
   onSignout: () => void
+  currentUser: () => string
   (): UserProps
 }
 

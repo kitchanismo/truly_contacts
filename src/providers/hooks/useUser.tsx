@@ -6,11 +6,11 @@ import { getDecodeToken } from 'utils/helper'
 
 const useUser = () => {
   const state = React.useState<User>({
-    username: '',
+    username: 'xxxxxxxx',
     first_name: '',
     last_name: '',
     email: '',
-    password: '',
+    password: 'xxxxxxxx',
   })
 
   const [isUserAuthenticated, setIsUserAuthenticated] = React.useState<boolean>(
@@ -39,7 +39,13 @@ const useUser = () => {
     localStorage.removeItem('refresh-token')
     setIsUserAuthenticated(false)
   }
+
+  const currentUser = () => {
+    return getDecodeToken()?.username as string
+  }
+
   return {
+    currentUser,
     onSignout,
     isUserAuthenticated,
     onRegister,

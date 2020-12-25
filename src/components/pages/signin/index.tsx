@@ -13,13 +13,14 @@ const SignIn: React.FC<SignInProps> = () => {
   const history = useHistory()
   const { state, onSignin } = React.useContext<UserProps>(UserContext)
 
-  const [user] = state
+  const [user, setUser] = state
 
   const onSubmit = async () => {
     try {
       const status = await onSignin(user)
       if (status === 200) {
         alert('Success login!')
+        setUser({} as User)
         history.replace('/contacts')
       } else if (status === 401) {
         alert('Invalid Username/Password!')
