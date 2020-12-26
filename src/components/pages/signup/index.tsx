@@ -5,8 +5,6 @@ import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
 import styles from './signup.module.css'
-import Notification from 'components/common/notification'
-import { exception } from 'console'
 
 const SignUp: React.FC = () => {
   const { state, onRegister } = React.useContext<UserProps>(Context)
@@ -31,6 +29,7 @@ const SignUp: React.FC = () => {
     state,
     validator,
     onSubmit,
+    resolveMessage: 'You may now signin...',
   }
 
   const inputProps: InputProps[] = [

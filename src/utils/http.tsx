@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { baseUrl } from 'configs/index.json'
+import { apiUrl } from 'configs/index.json'
 
 axios.interceptors.request.use((config) => {
-  config.baseURL = baseUrl
+  config.baseURL = apiUrl
   return config
 })
 

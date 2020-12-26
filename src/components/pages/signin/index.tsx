@@ -6,29 +6,15 @@ import UserContext, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
-import Notification from 'components/common/notification'
 
 export interface SignInProps {}
 
 const SignIn: React.FC<SignInProps> = () => {
   const history = useHistory()
+
   const { state, onSignin } = React.useContext<UserProps>(UserContext)
 
   const [user, setUser] = state
-
-  // const onSubmit = async () => {
-  //   try {
-  //     const status = await onSignin(user)
-  //     if (status === 200) {
-  //       setUser({} as User)
-  //       setTimeout(() => history.replace('/contacts'), 2000)
-  //     } else if (status === 401) {
-  //       alert('Invalid Username/Password!')
-  //     }
-  //   } catch (error) {
-  //     alert('Network/Server Error! ')
-  //   }
-  // }
 
   const onSubmit = () => {
     return onSignin(user)

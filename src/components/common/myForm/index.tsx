@@ -131,26 +131,19 @@ function MyForm<T>(props: MyFormProps<T>) {
   return (
     <Form onSubmit={onSubmit} className={globalStyles.formContainer}>
       {isDisable && (
-        <Notification
-          loading={true}
-          message={props.loadingMessage || 'Loading...'}
-        ></Notification>
+        <Notification loading={true}>
+          {props.loadingMessage || 'Loading....'}
+        </Notification>
       )}
       {isResolve && (
-        <Notification
-          color='green'
-          icon='check circle'
-          header='Done!'
-          message={props.resolveMessage || 'Thank you...'}
-        ></Notification>
+        <Notification color='green' icon='check circle' header='Done!'>
+          {props.resolveMessage || 'Thank you...'}
+        </Notification>
       )}
       {isRejected && (
-        <Notification
-          color='red'
-          icon='warning circle'
-          header='Warning!'
-          message={errorMessage}
-        ></Notification>
+        <Notification color='red' icon='warning circle' header='Warning!'>
+          {errorMessage}
+        </Notification>
       )}
       {props.children?.call(null, {
         myInput,

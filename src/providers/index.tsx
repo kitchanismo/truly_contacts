@@ -1,12 +1,12 @@
 import * as React from 'react'
 import UserContext from './contexts/userContext'
-import useUser from './hooks/useUser'
+import useUserService from './services/useUserService'
 
 const Provider: React.FC = (props) => {
-  const userProps = useUser()
+  const userService = useUserService()
 
   return (
-    <UserContext.Provider value={{ ...userProps }}>
+    <UserContext.Provider value={{ ...userService }}>
       {props.children}
     </UserContext.Provider>
   )
