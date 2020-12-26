@@ -26,7 +26,6 @@ const SignIn: React.FC<SignInProps> = () => {
         } else if (status === 401) {
           throw Error('Invalid Username/Password!')
         }
-        throw Error('Network Error')
       })
       .catch((err) => {
         throw err

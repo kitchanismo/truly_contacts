@@ -100,7 +100,7 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const myInput = (input: InputProps) => {
     return (
-      <Form.Field>
+      <Form.Field key={input.name}>
         <Form.Input
           type={input.type || 'text'}
           value={input.value || ''}

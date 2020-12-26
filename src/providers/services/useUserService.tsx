@@ -18,15 +18,7 @@ const useUser = () => {
   )
 
   const onRegister = (user: User) => {
-    return http
-      .post('/auth/register', user)
-      .then((data) => data.status)
-      .catch((error) => {
-        if (error.response) {
-          return error.response.status
-        }
-        throw Error('Network Error!')
-      })
+    return http.post('/auth/register', user).then((data) => data.status)
   }
   const onSignin = (user: User) => {
     return http
@@ -36,12 +28,7 @@ const useUser = () => {
         setIsUserAuthenticated(true)
         return data.status
       })
-      .catch((error) => {
-        if (error.response) {
-          return error.response.status
-        }
-        throw Error('Network Error!')
-      })
+      .catch((error) => error)
   }
 
   const onSignout = () => {
