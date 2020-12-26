@@ -6,6 +6,7 @@ import UserContext, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
+import Notification from 'components/common/notification'
 
 export interface SignInProps {}
 
@@ -19,7 +20,6 @@ const SignIn: React.FC<SignInProps> = () => {
     try {
       const status = await onSignin(user)
       if (status === 200) {
-        alert('Success login!')
         setUser({} as User)
         history.replace('/contacts')
       } else if (status === 401) {
@@ -34,6 +34,7 @@ const SignIn: React.FC<SignInProps> = () => {
     state,
     validator,
     onSubmit,
+    loadingMessage: 'Validating...',
   }
 
   return (

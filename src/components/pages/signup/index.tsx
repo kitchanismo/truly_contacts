@@ -5,6 +5,7 @@ import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
 import styles from './signup.module.css'
+import Notification from 'components/common/notification'
 
 const SignUp: React.FC = () => {
   const { state, onRegister } = React.useContext<UserProps>(Context)
@@ -15,7 +16,6 @@ const SignUp: React.FC = () => {
     try {
       const status = await onRegister(user)
       if (status === 201) {
-        alert('Registered!')
         setUser({} as User)
       } else if (status === 400) {
         alert('Invalid Credentials')
@@ -69,8 +69,16 @@ const SignUp: React.FC = () => {
           Register
         </Label>
         <MyForm {...formProps}>
-          {({ myInput, myButton }) => (
+          {({ myInput, myButton, isSuccess }) => (
             <>
+              {isSuccess && (
+                <Notification
+                  color='green'
+                  icon='check circle'
+                  header='Successfully Created!'
+                  message='You may now signin.'
+                ></Notification>
+              )}
               {inputProps.map((prop) => myInput(prop))}
               {myButton()}
             </>

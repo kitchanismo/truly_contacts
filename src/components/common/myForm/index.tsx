@@ -2,6 +2,7 @@ import React from 'react'
 import Joi from 'joi'
 import globalStyles from 'styles.module.css'
 import { Button, Form } from 'semantic-ui-react'
+import Notification from '../notification'
 
 export interface MyFormProps<T> {
   state: [T, React.Dispatch<React.SetStateAction<T>>]
@@ -9,6 +10,7 @@ export interface MyFormProps<T> {
   validator?: {}
   children?: (props: RenderProps) => JSX.Element
   clearOnSubmit?: boolean
+  loadingMessage?: string
 }
 
 export interface InputProps {
@@ -22,12 +24,15 @@ export interface InputProps {
 export interface RenderProps {
   myInput: (input: InputProps) => JSX.Element
   myButton: () => JSX.Element
+  isSuccess: boolean
 }
 
 function MyForm<T>(props: MyFormProps<T>) {
   const [data, setData] = props.state
 
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
+
+  const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
 
   const [errors, setErrors] = React.useState<any>()
 
@@ -59,6 +64,7 @@ function MyForm<T>(props: MyFormProps<T>) {
     const hasErrors = onValidate()
 
     setIsDisable(true)
+    setIsSuccess(false)
 
     if (hasErrors) {
       setErrors(hasErrors)
@@ -72,8 +78,12 @@ function MyForm<T>(props: MyFormProps<T>) {
         setErrors({})
         if (props.clearOnSubmit) setData({} as T)
         setIsDisable(false)
+        setIsSuccess(true)
       })
-      .catch(() => setIsDisable(true))
+      .catch(() => {
+        setIsSuccess(true)
+        setIsDisable(true)
+      })
   }
 
   const myInput = (input: InputProps) => {
@@ -101,14 +111,24 @@ function MyForm<T>(props: MyFormProps<T>) {
   const myButton = () => {
     return (
       <Button fluid disabled={isDisable} color='black' type='submit'>
-        {isDisable ? 'Submiting...' : 'Submit'}
+        Submit
       </Button>
     )
   }
 
   return (
     <Form onSubmit={onSubmit} className={globalStyles.formContainer}>
-      {props.children?.call(null, { myInput, myButton } as RenderProps)}
+      {isDisable && (
+        <Notification
+          loading={true}
+          message={props.loadingMessage || 'Loading...'}
+        ></Notification>
+      )}
+      {props.children?.call(null, {
+        myInput,
+        myButton,
+        isSuccess,
+      } as RenderProps)}
     </Form>
   )
 }
