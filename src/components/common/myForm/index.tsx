@@ -11,6 +11,8 @@ export interface MyFormProps<T> {
   children?: (props: RenderProps) => JSX.Element
   clearOnSubmit?: boolean
   loadingMessage?: string
+  resolveMessage?: string
+  rejectMessage?: string
 }
 
 export interface InputProps {
@@ -32,7 +34,13 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
-  const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
+  const [isResolve, setIsResolve] = React.useState<boolean>(false)
+
+  const [isRejected, setIsRejected] = React.useState<boolean>(false)
+
+  const [errorMessage, setErrorMessage] = React.useState<string>(
+    props.rejectMessage || ''
+  )
 
   const [errors, setErrors] = React.useState<any>()
 
@@ -64,7 +72,8 @@ function MyForm<T>(props: MyFormProps<T>) {
     const hasErrors = onValidate()
 
     setIsDisable(true)
-    setIsSuccess(false)
+    setIsResolve(false)
+    setIsRejected(false)
 
     if (hasErrors) {
       setErrors(hasErrors)
@@ -72,17 +81,20 @@ function MyForm<T>(props: MyFormProps<T>) {
       return
     }
 
-    props
+    return props
       .onSubmit()
       .then(() => {
         setErrors({})
         if (props.clearOnSubmit) setData({} as T)
         setIsDisable(false)
-        setIsSuccess(true)
+        setIsResolve(true)
+        setIsRejected(false)
       })
-      .catch(() => {
-        setIsSuccess(true)
-        setIsDisable(true)
+      .catch((error) => {
+        setIsDisable(false)
+        setIsRejected(true)
+        setIsResolve(false)
+        setErrorMessage(error.message)
       })
   }
 
@@ -124,10 +136,25 @@ function MyForm<T>(props: MyFormProps<T>) {
           message={props.loadingMessage || 'Loading...'}
         ></Notification>
       )}
+      {isResolve && (
+        <Notification
+          color='green'
+          icon='check circle'
+          header='Done!'
+          message={props.resolveMessage || 'Thank you...'}
+        ></Notification>
+      )}
+      {isRejected && (
+        <Notification
+          color='red'
+          icon='warning circle'
+          header='Warning!'
+          message={errorMessage}
+        ></Notification>
+      )}
       {props.children?.call(null, {
         myInput,
         myButton,
-        isSuccess,
       } as RenderProps)}
     </Form>
   )

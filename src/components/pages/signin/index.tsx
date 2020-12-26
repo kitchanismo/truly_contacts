@@ -16,18 +16,35 @@ const SignIn: React.FC<SignInProps> = () => {
 
   const [user, setUser] = state
 
-  const onSubmit = async () => {
-    try {
-      const status = await onSignin(user)
-      if (status === 200) {
-        setUser({} as User)
-        history.replace('/contacts')
-      } else if (status === 401) {
-        alert('Invalid Username/Password!')
-      }
-    } catch (error) {
-      alert('Network/Server Error! ')
-    }
+  // const onSubmit = async () => {
+  //   try {
+  //     const status = await onSignin(user)
+  //     if (status === 200) {
+  //       setUser({} as User)
+  //       setTimeout(() => history.replace('/contacts'), 2000)
+  //     } else if (status === 401) {
+  //       alert('Invalid Username/Password!')
+  //     }
+  //   } catch (error) {
+  //     alert('Network/Server Error! ')
+  //   }
+  // }
+
+  const onSubmit = () => {
+    return onSignin(user)
+      .then((status) => {
+        if (status === 200) {
+          setUser({} as User)
+          history.replace('/contacts')
+          return
+        } else if (status === 401) {
+          throw Error('Invalid Username/Password!')
+        }
+        throw Error('Network Error')
+      })
+      .catch((err) => {
+        throw err
+      })
   }
 
   const formProps: MyFormProps<User> = {

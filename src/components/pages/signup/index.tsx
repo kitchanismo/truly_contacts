@@ -6,23 +6,25 @@ import User from 'models/user'
 import validator from './validator'
 import styles from './signup.module.css'
 import Notification from 'components/common/notification'
+import { exception } from 'console'
 
 const SignUp: React.FC = () => {
   const { state, onRegister } = React.useContext<UserProps>(Context)
 
   const [user, setUser] = state
 
-  const onSubmit = async () => {
-    try {
-      const status = await onRegister(user)
-      if (status === 201) {
-        setUser({} as User)
-      } else if (status === 400) {
-        alert('Invalid Credentials')
-      }
-    } catch (error) {
-      alert('Network Error!')
-    }
+  const onSubmit = () => {
+    return onRegister(user)
+      .then((status) => {
+        if (status === 201) {
+          setUser({} as User)
+        } else if (status === 400) {
+          throw Error('Invalid Credentials')
+        }
+      })
+      .catch((err) => {
+        throw err
+      })
   }
 
   const formProps: MyFormProps<User> = {
@@ -69,16 +71,8 @@ const SignUp: React.FC = () => {
           Register
         </Label>
         <MyForm {...formProps}>
-          {({ myInput, myButton, isSuccess }) => (
+          {({ myInput, myButton }) => (
             <>
-              {isSuccess && (
-                <Notification
-                  color='green'
-                  icon='check circle'
-                  header='Successfully Created!'
-                  message='You may now signin.'
-                ></Notification>
-              )}
               {inputProps.map((prop) => myInput(prop))}
               {myButton()}
             </>
