@@ -30,7 +30,7 @@ const Nav: React.FC = () => {
         <>
           <Menu.Menu position='right'>
             <Menu.Item
-              color='red'
+              color='purple'
               name='contacts'
               active={activeItem === 'contacts'}
               onClick={handleItemClick}
@@ -75,7 +75,7 @@ const Nav: React.FC = () => {
   }
 
   return (
-    <Menu color='red' pointing secondary>
+    <Menu color='purple' pointing secondary>
       <Menu.Item
         name='home'
         active={activeItem === 'home'}

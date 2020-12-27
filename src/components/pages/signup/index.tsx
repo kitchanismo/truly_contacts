@@ -70,7 +70,7 @@ const SignUp: React.FC = () => {
   return (
     <Grid.Column className={styles.container}>
       <Segment raised>
-        <Label as='a' color='red' size='large' ribbon>
+        <Label as='a' color='purple' size='large' ribbon>
           Register
         </Label>
         <MyForm {...formProps}>

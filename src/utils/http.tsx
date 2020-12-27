@@ -1,15 +1,11 @@
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosError } from 'axios'
 import { apiUrl } from 'configs/index.json'
 
 //intercept requests
 axios.interceptors.request.use((config) => {
   config.baseURL = apiUrl
 
-  const publicURLRoutes = ['/auth/login', '/auth/register']
-
-  const isProtectedRoute = !publicURLRoutes.includes(config.url || '')
-
-  if (isProtectedRoute) {
+  if (localStorage.getItem('access-token')) {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       'access-token'
     )}`

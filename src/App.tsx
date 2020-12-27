@@ -7,16 +7,14 @@ import Routes from 'components/routes'
 import Provider from 'providers'
 
 const App: React.FC = (props) => (
-  <>
-    <Provider>
-      <Nav></Nav>
-      <Container fluid>
-        <Grid verticalAlign='top' centered className={styles.container}>
-          <Routes></Routes>
-        </Grid>
-      </Container>
-    </Provider>
-  </>
+  <Provider>
+    <Nav></Nav>
+    <Container fluid>
+      <Grid verticalAlign='top' centered className={styles.container}>
+        <Routes></Routes>
+      </Grid>
+    </Container>
+  </Provider>
 )
 
 export default App
