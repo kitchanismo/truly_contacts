@@ -19,8 +19,11 @@ const SignUp: React.FC = () => {
         }
       })
       .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          throw Error('Invalid Credentials')
+        if (error?.response?.status === 400) {
+          const errorMessage = error.response.data.username
+            ? error.response.data.username[0]
+            : error.response.data.email[0]
+          throw Error(errorMessage)
         }
         throw error
       })
