@@ -31,8 +31,8 @@ const SignUp: React.FC = () => {
 
   const formProps: MyFormProps<User> = {
     state,
-    validator,
     onSubmit,
+    validator,
     resolveMessage: 'You may now signin...',
   }
 
