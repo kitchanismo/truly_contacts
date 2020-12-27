@@ -7,11 +7,9 @@ axios.interceptors.request.use((config) => {
 
   const publicURLRoutes = ['/auth/login', '/auth/register']
 
-  const isProtectedRoute =
-    publicURLRoutes.filter((url) => url === config.url).length <= 0
+  const isProtectedRoute = !publicURLRoutes.includes(config.url || '')
 
   if (isProtectedRoute) {
-    console.log(config)
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       'access-token'
     )}`
