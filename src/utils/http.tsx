@@ -8,7 +8,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(response.status)
+    console.log('x', response.status)
     return response
   },
 
@@ -16,12 +16,7 @@ axios.interceptors.response.use(
     if (error.message === 'Network Error') {
       throw Error(error.message)
     }
-
-    if (error.message.includes('401')) {
-      throw Error('Bad Request!')
-    }
-
-    return error
+    throw error
   }
 )
 

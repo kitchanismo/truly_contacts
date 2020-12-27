@@ -16,12 +16,13 @@ const SignUp: React.FC = () => {
       .then((status) => {
         if (status === 201) {
           setUser({} as User)
-        } else if (status === 400) {
-          throw Error('Invalid Credentials')
         }
       })
-      .catch((err) => {
-        throw err
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          throw Error('Invalid Credentials')
+        }
+        throw error
       })
   }
 

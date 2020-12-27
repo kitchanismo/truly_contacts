@@ -22,13 +22,13 @@ const SignIn: React.FC<SignInProps> = () => {
         if (status === 200) {
           setUser({} as User)
           history.replace('/contacts')
-          return
-        } else if (status === 401) {
-          throw Error('Invalid Username/Password!')
         }
       })
-      .catch((err) => {
-        throw err
+      .catch((error) => {
+        if (error?.response?.status === 401) {
+          throw Error('Invalid Username/Password!')
+        }
+        throw error
       })
   }
 
