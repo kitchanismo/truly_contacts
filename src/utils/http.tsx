@@ -5,10 +5,10 @@ import { apiUrl } from 'configs/index.json'
 axios.interceptors.request.use((config) => {
   config.baseURL = apiUrl
 
-  const publicURLRoutes = ['/auth/login', 'auth/register']
+  const publicURLRoutes = ['/auth/login', '/auth/register']
 
   const isProtectedRoute =
-    publicURLRoutes.filter((url) => url === config.url).length > 0
+    publicURLRoutes.filter((url) => url === config.url).length <= 0
 
   if (isProtectedRoute) {
     console.log(config)
