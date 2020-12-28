@@ -9,7 +9,6 @@ axios.interceptors.request.use((config) => {
 
   config.headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   }
 
   if (localStorage.getItem('access-token')) {
@@ -17,6 +16,7 @@ axios.interceptors.request.use((config) => {
       'access-token'
     )}`
   }
+
   return config
 })
 
