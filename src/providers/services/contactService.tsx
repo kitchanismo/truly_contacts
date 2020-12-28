@@ -8,16 +8,29 @@ const useContactService = () => {
 
   const getContacts = () => {
     return http
-      .get('/contacts/')
+      .get<Contact[]>('/contacts/')
       .then((data) => {
         setContacts(data.data as Contact[])
+        return data.data as Contact[]
       })
       .catch((error) => {
         console.log(error)
+        return [] as Contact[]
       })
   }
 
-  return { state: [contacts, setContacts], getContacts } as ContactProps
+  const searchContacts = (query: string) => {
+    return contacts.filter(
+      (contact) =>
+        contact.first_name.includes(query) || contact.last_name.includes(query)
+    )
+  }
+
+  return {
+    state: [contacts, setContacts],
+    getContacts,
+    searchContacts,
+  } as ContactProps
 }
 
 export default useContactService

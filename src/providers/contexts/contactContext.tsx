@@ -4,7 +4,8 @@ import React from 'react'
 
 export interface ContactProps {
   state: [Contact[], React.Dispatch<React.SetStateAction<Contact[]>>]
-  getContacts: () => Promise<any>
+  getContacts: () => Promise<Contact[]>
+  searchContacts: (query: string) => Contact[]
   (): ContactProps
 }
 
