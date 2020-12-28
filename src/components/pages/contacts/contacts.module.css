@@ -1,0 +1,25 @@
+.container {
+  max-width: 700px;
+  margin-top: 30px !important;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.table {
+  background-color: white !important;
+  padding: 30px;
+}
+
+.body {
+  width: max-content;
+}
+
+.addSearch {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-start;
+}

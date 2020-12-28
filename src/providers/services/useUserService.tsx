@@ -4,7 +4,7 @@ import http from 'utils/http'
 import { UserProps } from 'providers/contexts/userContext'
 import { getDecodeToken } from 'utils/helper'
 
-const useUser = () => {
+const useUserService = () => {
   const state = React.useState<User>({
     username: 'xxxxxxxx',
     first_name: 'ddsd',
@@ -47,4 +47,4 @@ const useUser = () => {
   } as UserProps
 }
 
-export default useUser
+export default useUserService
