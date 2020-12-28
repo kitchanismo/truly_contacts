@@ -5,12 +5,18 @@ import { apiUrl } from 'configs/index.json'
 axios.interceptors.request.use((config) => {
   config.baseURL = apiUrl
 
+  config.withCredentials = false
+
+  config.headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  }
+
   if (localStorage.getItem('access-token')) {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       'access-token'
     )}`
   }
-
   return config
 })
 
