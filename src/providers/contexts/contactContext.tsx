@@ -6,6 +6,7 @@ export interface ContactProps {
   state: [Contact[], React.Dispatch<React.SetStateAction<Contact[]>>]
   getContacts: () => Promise<Contact[]>
   searchContacts: (query: string) => Contact[]
+  updateFavorite: (contact: Contact) => Promise<void>
   (): ContactProps
 }
 

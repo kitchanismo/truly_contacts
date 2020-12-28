@@ -22,14 +22,29 @@ const useContactService = () => {
   const searchContacts = (query: string) => {
     return contacts.filter(
       (contact) =>
-        contact.first_name.includes(query) || contact.last_name.includes(query)
+        contact.first_name.includes(query) ||
+        contact.last_name.includes(query) ||
+        contact.phone_number.includes(query)
     )
+  }
+
+  const updateFavorite = (contact: Contact) => {
+    contact.is_favorite = !contact.is_favorite
+    return http
+      .put('/contacts/' + contact.id, contact)
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return {
     state: [contacts, setContacts],
     getContacts,
     searchContacts,
+    updateFavorite,
   } as ContactProps
 }
 

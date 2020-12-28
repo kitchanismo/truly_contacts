@@ -14,6 +14,7 @@ import {
   Form,
   Dimmer,
   Loader,
+  Label,
 } from 'semantic-ui-react'
 import { nameCapitalize } from 'utils/helper'
 import styles from './contacts.module.css'
@@ -22,6 +23,7 @@ const Dashboard: React.FC = () => {
   const {
     getContacts,
     searchContacts,
+    updateFavorite,
     state: [contacts],
   } = React.useContext<ContactProps>(ContactContext)
 
@@ -53,9 +55,27 @@ const Dashboard: React.FC = () => {
     )
   }
 
-  const favoriteIcon = (isFavorite: boolean) => {
-    const name = isFavorite ? 'heart' : 'heart outline'
-    return <Icon color='red' name={name}></Icon>
+  const onToggleFavorite = (contact: Contact) => {
+    updateFavorite(contact)
+
+    const _list = list.map((item) => {
+      if (item.id === contact.id) {
+        item.is_favorite = contact.is_favorite
+      }
+      return item
+    })
+    setList(_list)
+  }
+
+  const favoriteIcon = (contact: Contact) => {
+    const name = contact.is_favorite ? 'heart' : 'heart outline'
+    return (
+      <Button.Group>
+        <Button onClick={() => onToggleFavorite(contact)} basic icon>
+          <Icon color='red' name={name}></Icon>
+        </Button>
+      </Button.Group>
+    )
   }
 
   const tableRows = () => {
@@ -79,9 +99,7 @@ const Dashboard: React.FC = () => {
             <Table.Cell textAlign='center'>
               <Flag name={contact.country_code as FlagNameValues}></Flag>
             </Table.Cell>
-            <Table.Cell textAlign='center'>
-              {favoriteIcon(contact.is_favorite)}
-            </Table.Cell>
+            <Table.Cell textAlign='center'>{favoriteIcon(contact)}</Table.Cell>
             <Table.Cell textAlign='center'>
               <Button.Group>
                 <Button basic icon>
@@ -102,14 +120,19 @@ const Dashboard: React.FC = () => {
   }
   return (
     <Grid.Column className={styles.container}>
+      <Label as='a' color='purple' size='large' ribbon>
+        Contact List
+      </Label>
       <Grid.Row className={styles.addSearch}>
-        <Input
-          size='small'
-          onChange={(e) => setQuery(e.currentTarget.value)}
-          value={query}
-          placeholder='Search...'
-        />
-
+        <span style={{ width: 300 }}>
+          <Input
+            fluid
+            size='small'
+            onChange={(e) => setQuery(e.currentTarget.value)}
+            value={query}
+            placeholder='Search name or number here...'
+          />
+        </span>
         <span>
           <Button
             onClick={() => setList(contacts)}
@@ -118,18 +141,13 @@ const Dashboard: React.FC = () => {
             labelPosition='left'
           />
           <Button
-            color='purple'
-            content='Add'
+            color='green'
+            content='Add New'
             icon='add'
             labelPosition='left'
           />
         </span>
       </Grid.Row>
-      {/* {list.length === 0 && (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      )} */}
       {list.length > 0 && (
         <Table textAlign='center' className={styles.table} basic='very' celled>
           {tableHeader()}
