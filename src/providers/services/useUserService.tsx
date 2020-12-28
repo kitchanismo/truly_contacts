@@ -6,11 +6,11 @@ import { getDecodeToken } from 'utils/helper'
 
 const useUserService = () => {
   const [user, setUser] = React.useState<User>({
-    username: 'xxxxxxxx',
+    username: 'kitchan',
     first_name: 'ddsd',
     last_name: 'dsd',
-    email: 'sd@gmail.com',
-    password: 'xxxxxxxx',
+    email: 'chan@gmail.com',
+    password: 'admin123',
   })
 
   const [isUserAuthenticated, setIsUserAuthenticated] = React.useState<boolean>(
