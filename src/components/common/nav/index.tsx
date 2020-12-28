@@ -3,6 +3,7 @@ import * as React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Label, Menu, MenuItemProps } from 'semantic-ui-react'
 import { nameCapitalize } from 'utils/helper'
+import styles from './index.module.css'
 
 const Nav: React.FC = () => {
   const history = useHistory()
@@ -30,17 +31,18 @@ const Nav: React.FC = () => {
         <>
           <Menu.Menu position='right'>
             <Menu.Item
-              color='purple'
+              className={styles.nav}
               name='contacts'
               active={activeItem === 'contacts'}
               onClick={handleItemClick}
             >
               Contacts
             </Menu.Item>
-            <Menu.Item color='purple'>
+            <Menu.Item className={styles.nav}>
               {nameCapitalize(currentUser())}
             </Menu.Item>
             <Menu.Item
+              className={styles.nav}
               position='right'
               name='logout'
               active={activeItem === 'logout'}
@@ -60,6 +62,7 @@ const Nav: React.FC = () => {
         <Menu.Item
           position='right'
           name='signin'
+          className={styles.nav}
           active={activeItem === 'signin'}
           onClick={handleItemClick}
         >
@@ -67,6 +70,7 @@ const Nav: React.FC = () => {
         </Menu.Item>
         <Menu.Item
           name='signup'
+          className={styles.nav}
           active={activeItem === 'signup'}
           onClick={handleItemClick}
         >
@@ -77,9 +81,10 @@ const Nav: React.FC = () => {
   }
 
   return (
-    <Menu color='purple' pointing secondary>
+    <Menu className={styles.nav} color='black' pointing secondary>
       <Menu.Item
         name='home'
+        className={styles.nav}
         active={activeItem === 'home'}
         onClick={handleItemClick}
       >

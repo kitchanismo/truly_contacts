@@ -41,6 +41,43 @@ const useContactService = () => {
       })
   }
 
+  const addContact = (contact: Contact) => {
+    return http
+      .post<Contact>('/contacts/', contact)
+      .then((data) => {
+        return data.data as Contact
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+
+  const deleteContact = (id: number) => {
+    const _temp = contacts
+    const _contacts = contacts.filter((contact) => contact.id != id)
+    setContacts(_contacts)
+    return http
+      .delete<Contact>('/contacts/' + id)
+      .then((data) => {
+        return data.data as Contact
+      })
+      .catch((error) => {
+        setContacts(_temp)
+        throw error
+      })
+  }
+
+  const updateContact = (contact: Contact) => {
+    return http
+      .put<Contact>('/contacts/' + contact.id, contact)
+      .then((data) => {
+        return data.data as Contact
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+
   const searchContacts = (query: string) => {
     return contacts.filter(
       (contact) =>
@@ -69,8 +106,11 @@ const useContactService = () => {
     setContact,
     getContact,
     getContacts,
+    addContact,
     searchContacts,
     updateFavorite,
+    updateContact,
+    deleteContact,
   } as ContactProps
 }
 

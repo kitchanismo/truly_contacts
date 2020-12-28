@@ -1,7 +1,7 @@
 import React from 'react'
 import Joi from 'joi'
 import globalStyles from 'styles.module.css'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Dimmer, Form, Loader } from 'semantic-ui-react'
 import Notification from '../notification'
 
 export interface MyFormProps<T> {
@@ -34,7 +34,7 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const [isDisable, setIsDisable] = React.useState<boolean>(false)
 
-  const [isResolve, setIsResolve] = React.useState<boolean>(false)
+  const [isResolved, setIsResolved] = React.useState<boolean>(false)
 
   const [isRejected, setIsRejected] = React.useState<boolean>(false)
 
@@ -72,7 +72,7 @@ function MyForm<T>(props: MyFormProps<T>) {
     const hasErrors = onValidate()
 
     setIsDisable(true)
-    setIsResolve(false)
+    setIsResolved(false)
     setIsRejected(false)
 
     if (hasErrors) {
@@ -87,13 +87,13 @@ function MyForm<T>(props: MyFormProps<T>) {
         setErrors({})
         if (props.clearOnSubmit) setData({} as T)
         setIsDisable(false)
-        setIsResolve(true)
+        setIsResolved(true)
         setIsRejected(false)
       })
       .catch((error) => {
         setIsDisable(false)
         setIsRejected(true)
-        setIsResolve(false)
+        setIsResolved(false)
         setErrorMessage(error.message)
       })
   }
@@ -122,7 +122,13 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   const myButton = () => {
     return (
-      <Button fluid disabled={isDisable} color='black' type='submit'>
+      <Button
+        loading={isDisable}
+        fluid
+        disabled={isDisable}
+        color='purple'
+        type='submit'
+      >
         Submit
       </Button>
     )
@@ -130,13 +136,8 @@ function MyForm<T>(props: MyFormProps<T>) {
 
   return (
     <Form onSubmit={onSubmit} className={globalStyles.formContainer}>
-      {isDisable && (
-        <Notification loading={true}>
-          {props.loadingMessage || 'Loading....'}
-        </Notification>
-      )}
-      {isResolve && (
-        <Notification color='green' icon='check circle' header='Done!'>
+      {isResolved && (
+        <Notification color='purple' icon='check circle' header='Done!'>
           {props.resolveMessage || 'Thank you...'}
         </Notification>
       )}

@@ -22,6 +22,8 @@ const Dashboard: React.FC = () => {
     getContacts,
     searchContacts,
     updateFavorite,
+    deleteContact,
+    setContacts,
     contacts,
   } = React.useContext<ContactProps>(ContactContext)
 
@@ -29,12 +31,10 @@ const Dashboard: React.FC = () => {
 
   const [query, setQuery] = React.useState<string>('')
 
-  const [list, setList] = React.useState<Contact[]>([])
+  const [list, setList] = React.useState<Contact[]>(contacts)
 
   React.useEffect(() => {
-    getContacts().then((contacts) => {
-      setList(contacts)
-    })
+    onReload()
   }, [])
 
   React.useEffect(() => {
@@ -72,10 +72,16 @@ const Dashboard: React.FC = () => {
     return (
       <Button.Group>
         <Button onClick={() => onToggleFavorite(contact)} basic icon>
-          <Icon color='red' name={name}></Icon>
+          <Icon color='purple' name={name}></Icon>
         </Button>
       </Button.Group>
     )
+  }
+
+  const onReload = () => {
+    getContacts().then((contacts) => {
+      setList(contacts)
+    })
   }
 
   const tableRows = () => {
@@ -102,9 +108,6 @@ const Dashboard: React.FC = () => {
             <Table.Cell textAlign='center'>{favoriteIcon(contact)}</Table.Cell>
             <Table.Cell textAlign='center'>
               <Button.Group>
-                <Button basic icon>
-                  <Icon name='eye' color='blue' />
-                </Button>
                 <Button
                   onClick={() => {
                     history.push('/contacts/' + contact.id)
@@ -114,7 +117,13 @@ const Dashboard: React.FC = () => {
                 >
                   <Icon name='pencil' color='yellow' />
                 </Button>
-                <Button basic icon>
+                <Button
+                  onClick={() => {
+                    deleteContact(+contact.id).then(() => onReload())
+                  }}
+                  basic
+                  icon
+                >
                   <Icon name='trash' color='red' />
                 </Button>
               </Button.Group>
@@ -126,7 +135,7 @@ const Dashboard: React.FC = () => {
   }
   return (
     <Grid.Column className={styles.container}>
-      <Label as='a' color='purple' size='large' ribbon>
+      <Label as='a' color='black' size='large' ribbon>
         Contact List
       </Label>
       <Grid.Row className={styles.addSearch}>
@@ -140,17 +149,11 @@ const Dashboard: React.FC = () => {
           />
         </span>
         <span>
+          <Button onClick={onReload} icon='refresh' />
           <Button
-            onClick={() => setList(contacts)}
-            content='Refresh'
-            icon='refresh'
-            labelPosition='left'
-          />
-          <Button
-            color='green'
-            content='Add New'
+            onClick={() => history.push('/contacts/new')}
+            color='purple'
             icon='add'
-            labelPosition='left'
           />
         </span>
       </Grid.Row>

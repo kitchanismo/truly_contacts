@@ -4,36 +4,31 @@ import * as React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Grid, Label, Segment } from 'semantic-ui-react'
 import validator from '../validator'
-import styles from './edit.module.css'
+import styles from './new.module.css'
 import ContactContext, { ContactProps } from 'providers/contexts/contactContext'
 
 export interface EditContactProps {}
 
-const EditContact: React.FC<EditContactProps> = () => {
-  const { id } = useParams<{ id: string }>()
-
+const NewContact: React.FC<EditContactProps> = () => {
   const history = useHistory()
 
-  const {
-    contact,
-    setContact,
-    getContact,
-    updateContact,
-  } = React.useContext<ContactProps>(ContactContext)
-
-  React.useEffect(() => {
-    getContact(id)
-      .then()
-      .catch((error) => {
-        if (error?.response?.status === 404) {
-          history.push('/not-found')
-        }
-      })
-  }, [])
+  const { contact, setContact, addContact } = React.useContext<ContactProps>(
+    ContactContext
+  )
 
   const onSubmit = () => {
-    return updateContact(contact).then((contact) => console.log(contact))
+    return addContact(contact).then(() =>
+      setContact({
+        is_favorite: false,
+      } as Contact)
+    )
   }
+
+  React.useEffect(() => {
+    setContact({
+      is_favorite: false,
+    } as Contact)
+  }, [])
 
   const formProps: MyFormProps<Contact> = {
     state: [contact, setContact],
@@ -45,7 +40,7 @@ const EditContact: React.FC<EditContactProps> = () => {
     <Grid.Column className={styles.container}>
       <Segment raised>
         <Label as='a' color='black' size='large' ribbon>
-          Edit Contact
+          Add New Contact
         </Label>
         <MyForm {...formProps}>
           {({ myInput, myButton }) => (
@@ -86,4 +81,4 @@ const EditContact: React.FC<EditContactProps> = () => {
   )
 }
 
-export default EditContact
+export default NewContact

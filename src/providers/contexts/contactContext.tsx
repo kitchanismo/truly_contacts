@@ -8,9 +8,12 @@ export interface ContactProps {
   contact: Contact
   setContact: React.Dispatch<React.SetStateAction<Contact>>
   getContacts: () => Promise<Contact[]>
+  addContact: (contact: Contact) => Promise<Contact>
   getContact: (id: string) => Promise<Contact>
   searchContacts: (query: string) => Contact[]
   updateFavorite: (contact: Contact) => Promise<void>
+  updateContact: (contact: Contact) => Promise<Contact>
+  deleteContact: (id: number) => Promise<Contact>
   (): ContactProps
 }
 

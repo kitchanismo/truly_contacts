@@ -41,7 +41,7 @@ const SignIn: React.FC<SignInProps> = () => {
   return (
     <Grid.Column className={styles.container}>
       <Segment raised>
-        <Label as='a' color='purple' size='large' ribbon>
+        <Label as='a' color='black' size='large' ribbon>
           Sign In
         </Label>
         <MyForm {...formProps}>
