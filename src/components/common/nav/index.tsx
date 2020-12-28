@@ -16,7 +16,7 @@ const Nav: React.FC = () => {
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 
   React.useEffect(() => {
-    setActiveItem(history.location.pathname.substring(0))
+    setActiveItem(history.location.pathname.substring(1))
   }, [])
 
   const handleItemClick = (e: any, input: MenuItemProps) => {
@@ -35,9 +35,11 @@ const Nav: React.FC = () => {
               active={activeItem === 'contacts'}
               onClick={handleItemClick}
             >
+              Contacts
+            </Menu.Item>
+            <Menu.Item color='purple'>
               {nameCapitalize(currentUser())}
             </Menu.Item>
-
             <Menu.Item
               position='right'
               name='logout'

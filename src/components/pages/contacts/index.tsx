@@ -117,14 +117,19 @@ const Dashboard: React.FC = () => {
             icon='refresh'
             labelPosition='left'
           />
-          <Button color='green' content='Add' icon='add' labelPosition='left' />
+          <Button
+            color='purple'
+            content='Add'
+            icon='add'
+            labelPosition='left'
+          />
         </span>
       </Grid.Row>
-      {list.length === 0 && (
+      {/* {list.length === 0 && (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
         </Dimmer>
-      )}
+      )} */}
       {list.length > 0 && (
         <Table textAlign='center' className={styles.table} basic='very' celled>
           {tableHeader()}
