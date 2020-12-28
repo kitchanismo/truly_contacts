@@ -6,6 +6,16 @@ import http from 'utils/http'
 const useContactService = () => {
   const [contacts, setContacts] = useState<Contact[]>([])
 
+  const [contact, setContact] = useState<Contact>({
+    id: 0,
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    country_code: '',
+    contact_picture: '',
+    is_favorite: false,
+  })
+
   const getContacts = () => {
     return http
       .get<Contact[]>('/contacts/')
@@ -19,12 +29,24 @@ const useContactService = () => {
       })
   }
 
+  const getContact = (id: string) => {
+    return http
+      .get<Contact>('/contacts/' + id)
+      .then((data) => {
+        setContact(data.data as Contact)
+        return data.data as Contact
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+
   const searchContacts = (query: string) => {
     return contacts.filter(
       (contact) =>
-        contact.first_name.includes(query) ||
-        contact.last_name.includes(query) ||
-        contact.phone_number.includes(query)
+        contact.first_name.toString().includes(query) ||
+        contact.last_name.toString().includes(query) ||
+        contact.phone_number.toString().includes(query)
     )
   }
 
@@ -36,12 +58,16 @@ const useContactService = () => {
         console.log(data)
       })
       .catch((error) => {
-        console.log(error)
+        throw error
       })
   }
 
   return {
-    state: [contacts, setContacts],
+    contacts,
+    setContacts,
+    contact,
+    setContact,
+    getContact,
     getContacts,
     searchContacts,
     updateFavorite,

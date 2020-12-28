@@ -3,7 +3,8 @@ import User from 'models/user'
 import React from 'react'
 
 export interface UserProps {
-  state: [User, React.Dispatch<React.SetStateAction<User>>]
+  user: User
+  setUser: React.Dispatch<React.SetStateAction<User>>
   onRegister: (user: User) => Promise<any>
   onSignin: (user: User) => Promise<any>
   isUserAuthenticated: boolean

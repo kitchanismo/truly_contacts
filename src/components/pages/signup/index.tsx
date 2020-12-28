@@ -4,12 +4,10 @@ import Context, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
-import styles from './signup.module.css'
+import styles from './index.module.css'
 
 const SignUp: React.FC = () => {
-  const { state, onRegister } = React.useContext<UserProps>(Context)
-
-  const [user, setUser] = state
+  const { user, setUser, onRegister } = React.useContext<UserProps>(Context)
 
   const onSubmit = () => {
     return onRegister(user)
@@ -30,7 +28,7 @@ const SignUp: React.FC = () => {
   }
 
   const formProps: MyFormProps<User> = {
-    state,
+    state: [user, setUser],
     onSubmit,
     validator,
     resolveMessage: 'You may now signin...',

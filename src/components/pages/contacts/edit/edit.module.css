@@ -1,0 +1,9 @@
+.container {
+  max-width: 400px;
+  margin-top: 30px !important;
+}
+
+.favorite {
+  display: flex;
+  justify-content: flex-end;
+}

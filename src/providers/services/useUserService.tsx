@@ -5,7 +5,7 @@ import { UserProps } from 'providers/contexts/userContext'
 import { getDecodeToken } from 'utils/helper'
 
 const useUserService = () => {
-  const state = React.useState<User>({
+  const [user, setUser] = React.useState<User>({
     username: 'xxxxxxxx',
     first_name: 'ddsd',
     last_name: 'dsd',
@@ -43,7 +43,8 @@ const useUserService = () => {
     isUserAuthenticated,
     onRegister,
     onSignin,
-    state,
+    user,
+    setUser,
   } as UserProps
 }
 

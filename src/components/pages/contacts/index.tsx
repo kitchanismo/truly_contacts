@@ -1,6 +1,7 @@
 import Contact from 'models/contact'
 import ContactContext, { ContactProps } from 'providers/contexts/contactContext'
 import * as React from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Grid,
   Header,
@@ -11,21 +12,20 @@ import {
   FlagNameValues,
   Button,
   Input,
-  Form,
-  Dimmer,
-  Loader,
   Label,
 } from 'semantic-ui-react'
 import { nameCapitalize } from 'utils/helper'
-import styles from './contacts.module.css'
+import styles from './index.module.css'
 
 const Dashboard: React.FC = () => {
   const {
     getContacts,
     searchContacts,
     updateFavorite,
-    state: [contacts],
+    contacts,
   } = React.useContext<ContactProps>(ContactContext)
+
+  const history = useHistory()
 
   const [query, setQuery] = React.useState<string>('')
 
@@ -82,16 +82,16 @@ const Dashboard: React.FC = () => {
     return (
       <>
         {list.map((contact) => (
-          <Table.Row key={contact.id}>
+          <Table.Row key={contact.id.toString()}>
             <Table.Cell textAlign='center'>
               <Image src={contact.contact_picture} rounded size='mini' />
             </Table.Cell>
             <Table.Cell>
               <Header as='h4' image>
                 <Header.Content>
-                  {`${nameCapitalize(contact.last_name)}, ${nameCapitalize(
-                    contact.first_name
-                  )}`}
+                  {`${nameCapitalize(
+                    contact.last_name.toString()
+                  )}, ${nameCapitalize(contact.first_name.toString())}`}
                   <Header.Subheader>{contact.phone_number}</Header.Subheader>
                 </Header.Content>
               </Header>
@@ -105,7 +105,13 @@ const Dashboard: React.FC = () => {
                 <Button basic icon>
                   <Icon name='eye' color='blue' />
                 </Button>
-                <Button basic icon>
+                <Button
+                  onClick={() => {
+                    history.push('/contacts/' + contact.id)
+                  }}
+                  basic
+                  icon
+                >
                   <Icon name='pencil' color='yellow' />
                 </Button>
                 <Button basic icon>

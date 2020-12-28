@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Grid, Segment, Label } from 'semantic-ui-react'
-import styles from './signin.module.css'
+import styles from './index.module.css'
 import UserContext, { UserProps } from 'providers/contexts/userContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
@@ -12,9 +12,7 @@ export interface SignInProps {}
 const SignIn: React.FC<SignInProps> = () => {
   const history = useHistory()
 
-  const { state, onSignin } = React.useContext<UserProps>(UserContext)
-
-  const [user, setUser] = state
+  const { user, setUser, onSignin } = React.useContext<UserProps>(UserContext)
 
   const onSubmit = () => {
     return onSignin(user)
@@ -34,7 +32,7 @@ const SignIn: React.FC<SignInProps> = () => {
   }
 
   const formProps: MyFormProps<User> = {
-    state,
+    state: [user, setUser],
     validator,
     onSubmit,
     loadingMessage: 'Validating...',

@@ -9,11 +9,13 @@ import SignIn from 'components/pages/signin'
 import SignUp from 'components/pages/signup'
 import Home from 'components/pages/home'
 import Contact from 'components/pages/contacts'
+import EditContact from 'components/pages/contacts/edit/edit'
 import NotFound from 'components/pages/notFound'
 
 const Routes = () => {
   return (
     <Switch>
+      <AuthRoute path='/contacts/:id' component={EditContact} />
       <AuthRoute path='/contacts' component={Contact} />
       <GuestRoute path='/signup' component={SignUp} />
       <GuestRoute path='/signin' component={SignIn} />
