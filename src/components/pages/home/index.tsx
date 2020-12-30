@@ -3,7 +3,7 @@ import * as React from 'react'
 export interface HomeProps {}
 
 const Home: React.SFC<HomeProps> = () => {
-  return <h1>Home</h1>
+  return null
 }
 
 export default Home

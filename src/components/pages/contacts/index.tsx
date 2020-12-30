@@ -90,7 +90,12 @@ const Dashboard: React.FC = () => {
         {list.map((contact) => (
           <Table.Row key={contact.id.toString()}>
             <Table.Cell textAlign='center'>
-              <Image src={contact.contact_picture} rounded size='mini' />
+              <Image
+                centered
+                src={contact.contact_picture}
+                rounded
+                size='mini'
+              />
             </Table.Cell>
             <Table.Cell>
               <Header as='h4' image>
