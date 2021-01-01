@@ -26,12 +26,12 @@ export const lettersOnly = (label: string) => {
 export const nameCapitalize = (name: string) =>
   name.charAt(0).toUpperCase() + name.slice(1)
 
-export const getDecodeToken = () => {
+export const getDecodeToken: any = () => {
   const token = localStorage.getItem('access-token')
 
   try {
     if (token) {
-      return jwtDecode<User>(token)
+      return jwtDecode(token)
     }
   } catch (error) {
     return null

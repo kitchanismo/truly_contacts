@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ContactContext from './contexts/contactContext'
 import UserContext from './contexts/userContext'
-import useContactService from './services/contactService'
+import useContactService from './services/useContactService'
 import useUserService from './services/useUserService'
 
 const Provider: React.FC = (props) => {

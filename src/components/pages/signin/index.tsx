@@ -24,8 +24,7 @@ const SignIn: React.FC<SignInProps> = () => {
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
-          //Invalid Credentials
-          throw Error(error.response.data.detail)
+          throw Error(error.response.data.error)
         }
         throw error
       })

@@ -14,7 +14,7 @@ const useUserService = () => {
   })
 
   const [isUserAuthenticated, setIsUserAuthenticated] = React.useState<boolean>(
-    getDecodeToken() ? true : false
+    getDecodeToken() ? true : false,
   )
 
   const onRegister = (user: User) => {
@@ -34,7 +34,7 @@ const useUserService = () => {
   }
 
   const currentUser = () => {
-    return getDecodeToken()?.username as string
+    return getDecodeToken().data.username as string
   }
 
   return {

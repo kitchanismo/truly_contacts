@@ -18,9 +18,9 @@ const SignUp: React.FC = () => {
       })
       .catch((error) => {
         if (error?.response?.status === 400) {
-          const errorMessage = error.response.data.username
-            ? error.response.data.username[0]
-            : error.response.data.email[0]
+          const errorMessage = error.response.data.error.username
+            ? error.response.data.error.username
+            : error.response.data.error.email
           throw Error(errorMessage)
         }
         throw error
