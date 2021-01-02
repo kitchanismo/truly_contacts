@@ -3,7 +3,10 @@ import { apiUrl } from 'configs/index.json'
 
 //intercept requests
 axios.interceptors.request.use((config) => {
-  config.baseURL = apiUrl
+  config.baseURL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:4000/api/'
+      : apiUrl
 
   config.withCredentials = false
 
@@ -13,7 +16,7 @@ axios.interceptors.request.use((config) => {
 
   if (localStorage.getItem('access-token')) {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
-      'access-token'
+      'access-token',
     )}`
   }
 
@@ -28,7 +31,7 @@ axios.interceptors.response.use(
       throw Error(error.message)
     }
     throw error
-  }
+  },
 )
 
 export default {
