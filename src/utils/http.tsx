@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { apiUrl } from 'configs/index.json'
+import { apiUrlProd, apiUrlDev } from 'configs/index.json'
 import jwtDecode from 'jwt-decode'
 import { getDecodeToken } from './helper'
 
@@ -8,9 +8,7 @@ const axiosInstance = axios.create()
 //intercept requests
 axiosInstance.interceptors.request.use((config) => {
   config.baseURL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5000/api/'
-      : apiUrl
+    process.env.NODE_ENV === 'development' ? apiUrlDev : apiUrlProd
 
   const token = localStorage.getItem('access-token')
 

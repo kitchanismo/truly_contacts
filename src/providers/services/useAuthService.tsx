@@ -30,9 +30,25 @@ const useAuthService = () => {
   }
 
   const onSignout = () => {
-    localStorage.removeItem('access-token')
-    localStorage.removeItem('refresh-token')
-    setIsUserAuthenticated(false)
+    return http
+      .post('/auth/signout', {
+        refreshToken: localStorage.getItem('refresh-token'),
+      })
+      .then((data) => {
+        localStorage.removeItem('access-token')
+        localStorage.removeItem('refresh-token')
+        setIsUserAuthenticated(false)
+        return data.data.affected
+      })
+  }
+
+  const onSignoutAll = () => {
+    return http.get('/auth/signout-all').then((data) => {
+      localStorage.removeItem('access-token')
+      localStorage.removeItem('refresh-token')
+      setIsUserAuthenticated(false)
+      return data.data.affected
+    })
   }
 
   const currentUser = () => {
@@ -42,6 +58,7 @@ const useAuthService = () => {
   return {
     currentUser,
     onSignout,
+    onSignoutAll,
     isUserAuthenticated,
     onRegister,
     onSignin,

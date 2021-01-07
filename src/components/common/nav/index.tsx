@@ -11,6 +11,7 @@ const Nav: React.FC = () => {
   const {
     isUserAuthenticated,
     onSignout,
+    onSignoutAll,
     currentUser,
   } = React.useContext<AuthProps>(AuthContext)
 
@@ -52,6 +53,18 @@ const Nav: React.FC = () => {
               }}
             >
               Logout
+            </Menu.Item>
+            <Menu.Item
+              className={styles.nav}
+              position='right'
+              name='logoutall'
+              active={activeItem === 'logoutall'}
+              onClick={() => {
+                onSignoutAll()
+                history.replace('/')
+              }}
+            >
+              Logout All Devices
             </Menu.Item>
           </Menu.Menu>
         </>

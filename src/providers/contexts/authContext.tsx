@@ -8,7 +8,8 @@ export interface AuthProps {
   onRegister: (user: User) => Promise<any>
   onSignin: (user: User) => Promise<any>
   isUserAuthenticated: boolean
-  onSignout: () => void
+  onSignout: () => Promise<any>
+  onSignoutAll: () => Promise<any>
   currentUser: () => string
   (): AuthProps
 }

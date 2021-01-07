@@ -1,3 +1,4 @@
 {
-    "apiUrl": "https://kitchan-contacts.herokuapp.com/api/"
+    "apiUrlProd": "https://kitchan-contacts.herokuapp.com/api/",
+    "apiUrlDev": "http://localhost:5000/api/"
 }
