@@ -101,7 +101,7 @@ const Dashboard: React.FC = () => {
               <Header as='h4' image>
                 <Header.Content>
                   {`${nameCapitalize(
-                    contact.last_name.toString()
+                    contact.last_name.toString(),
                   )}, ${nameCapitalize(contact.first_name.toString())}`}
                   <Header.Subheader>{contact.phone_number}</Header.Subheader>
                 </Header.Content>
@@ -162,7 +162,7 @@ const Dashboard: React.FC = () => {
           />
         </span>
       </Grid.Row>
-      {list.length > 0 && (
+      {list && list.length > 0 && (
         <Table textAlign='center' className={styles.table} basic='very' celled>
           {tableHeader()}
           <Table.Body className={styles.body}>{tableRows()}</Table.Body>

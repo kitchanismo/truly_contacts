@@ -39,7 +39,7 @@ function MyForm<T>(props: MyFormProps<T>) {
   const [isRejected, setIsRejected] = React.useState<boolean>(false)
 
   const [errorMessage, setErrorMessage] = React.useState<string>(
-    props.rejectMessage || ''
+    props.rejectMessage || '',
   )
 
   const [errors, setErrors] = React.useState<any>()

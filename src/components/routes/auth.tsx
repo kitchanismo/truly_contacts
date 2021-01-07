@@ -1,6 +1,6 @@
 import NotFound from 'components/pages/notFound'
 import SignIn from 'components/pages/signin'
-import UserContext, { UserProps } from 'providers/contexts/userContext'
+import AuthContext, { AuthProps } from 'providers/contexts/authContext'
 import React, { useContext } from 'react'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
 
@@ -10,7 +10,7 @@ const AuthRoute: React.FC<RouteProps> = ({
   render,
   ...rest
 }) => {
-  const { isUserAuthenticated } = useContext<UserProps>(UserContext)
+  const { isUserAuthenticated } = useContext<AuthProps>(AuthContext)
   return (
     <Route
       {...rest}

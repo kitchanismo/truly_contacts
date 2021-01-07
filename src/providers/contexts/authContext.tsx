@@ -2,7 +2,7 @@ import Joi from 'joi'
 import User from 'models/user'
 import React from 'react'
 
-export interface UserProps {
+export interface AuthProps {
   user: User
   setUser: React.Dispatch<React.SetStateAction<User>>
   onRegister: (user: User) => Promise<any>
@@ -10,9 +10,9 @@ export interface UserProps {
   isUserAuthenticated: boolean
   onSignout: () => void
   currentUser: () => string
-  (): UserProps
+  (): AuthProps
 }
 
-const UserContext = React.createContext<any>(null)
+const AuthContext = React.createContext<any>(null)
 
-export default UserContext
+export default AuthContext

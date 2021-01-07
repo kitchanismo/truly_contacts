@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Grid, Segment, Label } from 'semantic-ui-react'
 import styles from './index.module.css'
-import UserContext, { UserProps } from 'providers/contexts/userContext'
+import AuthContext, { AuthProps } from 'providers/contexts/authContext'
 import MyForm, { MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
@@ -12,7 +12,7 @@ export interface SignInProps {}
 const SignIn: React.FC<SignInProps> = () => {
   const history = useHistory()
 
-  const { user, setUser, onSignin } = React.useContext<UserProps>(UserContext)
+  const { user, setUser, onSignin } = React.useContext<AuthProps>(AuthContext)
 
   const onSubmit = () => {
     return onSignin(user)

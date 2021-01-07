@@ -83,7 +83,7 @@ const useContactService = () => {
       (contact) =>
         contact.first_name.toString().includes(query) ||
         contact.last_name.toString().includes(query) ||
-        contact.phone_number.toString().includes(query)
+        contact.phone_number.toString().includes(query),
     )
   }
 
@@ -91,9 +91,7 @@ const useContactService = () => {
     contact.is_favorite = !contact.is_favorite
     return http
       .put('/contacts/' + contact.id, contact)
-      .then((data) => {
-        console.log(data)
-      })
+      .then((data) => {})
       .catch((error) => {
         throw error
       })

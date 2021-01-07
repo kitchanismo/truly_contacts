@@ -1,4 +1,4 @@
-import UserContext, { UserProps } from 'providers/contexts/userContext'
+import AuthContext, { AuthProps } from 'providers/contexts/authContext'
 import * as React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Label, Menu, MenuItemProps } from 'semantic-ui-react'
@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
     isUserAuthenticated,
     onSignout,
     currentUser,
-  } = React.useContext<UserProps>(UserContext)
+  } = React.useContext<AuthProps>(AuthContext)
 
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import User from 'models/user'
 import http from 'utils/http'
-import { UserProps } from 'providers/contexts/userContext'
+import { AuthProps } from 'providers/contexts/authContext'
 import { getDecodeToken } from 'utils/helper'
 
-const useUserService = () => {
+const useAuthService = () => {
   const [user, setUser] = React.useState<User>({
     username: 'kitchan',
     first_name: 'ddsd',
@@ -22,7 +22,8 @@ const useUserService = () => {
   }
   const onSignin = (user: User) => {
     return http.post('/auth/login', user).then((data) => {
-      localStorage.setItem('access-token', data.data.token)
+      localStorage.setItem('access-token', data.data.accessToken)
+      localStorage.setItem('refresh-token', data.data.refreshToken)
       setIsUserAuthenticated(true)
       return data.status
     })
@@ -30,6 +31,7 @@ const useUserService = () => {
 
   const onSignout = () => {
     localStorage.removeItem('access-token')
+    localStorage.removeItem('refresh-token')
     setIsUserAuthenticated(false)
   }
 
@@ -45,7 +47,7 @@ const useUserService = () => {
     onSignin,
     user,
     setUser,
-  } as UserProps
+  } as AuthProps
 }
 
-export default useUserService
+export default useAuthService

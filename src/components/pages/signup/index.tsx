@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Grid, Segment, Label } from 'semantic-ui-react'
-import Context, { UserProps } from 'providers/contexts/userContext'
+import Context, { AuthProps } from 'providers/contexts/authContext'
 import MyForm, { InputProps, MyFormProps } from 'components/common/myForm'
 import User from 'models/user'
 import validator from './validator'
 import styles from './index.module.css'
 
 const SignUp: React.FC = () => {
-  const { user, setUser, onRegister } = React.useContext<UserProps>(Context)
+  const { user, setUser, onRegister } = React.useContext<AuthProps>(Context)
 
   const onSubmit = () => {
     return onRegister(user)

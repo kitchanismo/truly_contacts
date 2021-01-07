@@ -1,19 +1,19 @@
 import * as React from 'react'
 import ContactContext from './contexts/contactContext'
-import UserContext from './contexts/userContext'
+import AuthContext from './contexts/authContext'
 import useContactService from './services/useContactService'
-import useUserService from './services/useUserService'
+import useAuthService from './services/useAuthService'
 
 const Provider: React.FC = (props) => {
-  const userService = useUserService()
+  const authService = useAuthService()
   const contactService = useContactService()
 
   return (
-    <UserContext.Provider value={{ ...userService }}>
+    <AuthContext.Provider value={{ ...authService }}>
       <ContactContext.Provider value={{ ...contactService }}>
         {props.children}
       </ContactContext.Provider>
-    </UserContext.Provider>
+    </AuthContext.Provider>
   )
 }
 
