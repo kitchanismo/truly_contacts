@@ -12,25 +12,16 @@ const useAuthService = () => {
     password: 'admin123',
   })
 
-  const [currentUser, setCurrentUser] = React.useState<{
-    username: string
-    id: number
-  } | null>(null)
+  const [currentUsername, setCurrentUsername] = React.useState<string>('')
 
   React.useEffect(() => {
     isUserAuthenticated()
   }, [])
 
   const isUserAuthenticated = () => {
-    return http
-      .get('/auth/me')
-      .then((data) => {
-        setCurrentUser(data.data)
-        return true
-      })
-      .catch((error) => {
-        return false
-      })
+    return http.get('/auth/me').then((data) => {
+      setCurrentUsername(data.data.username)
+    })
   }
 
   const onRegister = (user: User) => {
@@ -55,7 +46,7 @@ const useAuthService = () => {
   }
 
   return {
-    currentUser,
+    currentUsername,
     onSignout,
     onSignoutAll,
     onRegister,

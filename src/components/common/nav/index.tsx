@@ -8,9 +8,11 @@ import styles from './index.module.css'
 const Nav: React.FC = () => {
   const history = useHistory()
 
-  const { onSignout, onSignoutAll, currentUser } = React.useContext<AuthProps>(
-    AuthContext,
-  )
+  const {
+    onSignout,
+    onSignoutAll,
+    currentUsername,
+  } = React.useContext<AuthProps>(AuthContext)
 
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 
@@ -24,7 +26,7 @@ const Nav: React.FC = () => {
   }
 
   const renderMenus = () => {
-    if (currentUser)
+    if (currentUsername)
       return (
         <>
           <Menu.Menu position='right'>
@@ -37,7 +39,7 @@ const Nav: React.FC = () => {
               Contacts
             </Menu.Item>
             <Menu.Item className={styles.nav}>
-              {nameCapitalize(currentUser.username || '')}
+              {nameCapitalize(currentUsername)}
             </Menu.Item>
             <Menu.Item
               className={styles.nav}

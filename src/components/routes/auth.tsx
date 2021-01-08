@@ -10,12 +10,12 @@ const AuthRoute: React.FC<RouteProps> = ({
   render,
   ...rest
 }) => {
-  const { currentUser } = useContext<AuthProps>(AuthContext)
+  const { currentUsername } = useContext<AuthProps>(AuthContext)
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!currentUser)
+        if (!currentUsername)
           return (
             <Redirect
               to={{

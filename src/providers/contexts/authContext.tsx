@@ -9,7 +9,7 @@ export interface AuthProps {
   onSignin: (user: User) => Promise<any>
   onSignout: () => Promise<any>
   onSignoutAll: () => Promise<any>
-  currentUser: { username: string; id: number } | null
+  currentUsername: string
   (): AuthProps
 }
 

@@ -25,7 +25,6 @@ axios.interceptors.response.use(
 createAuthRefreshInterceptor(
   axios,
   (failedRequest) => {
-    const refreshToken = localStorage.getItem('refresh-token')
     return axios.get('/auth/refresh-token').then(({ data }) => {
       return Promise.resolve()
     })
