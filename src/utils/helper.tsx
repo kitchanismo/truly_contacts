@@ -1,6 +1,5 @@
 import Joi from 'joi'
 import jwtDecode from 'jwt-decode'
-import User from 'models/user'
 
 export const lettersOnly = (label: string) => {
   return Joi.string()

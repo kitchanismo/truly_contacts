@@ -2,7 +2,6 @@ import * as React from 'react'
 import User from 'models/user'
 import http from 'utils/http'
 import { AuthProps } from 'providers/contexts/authContext'
-import { getDecodeToken } from 'utils/helper'
 
 const useAuthService = () => {
   const [user, setUser] = React.useState<User>({
@@ -13,53 +12,52 @@ const useAuthService = () => {
     password: 'admin123',
   })
 
-  const [isUserAuthenticated, setIsUserAuthenticated] = React.useState<boolean>(
-    getDecodeToken() ? true : false,
-  )
+  const [currentUser, setCurrentUser] = React.useState<{
+    username: string
+    id: number
+  } | null>(null)
+
+  React.useEffect(() => {
+    isUserAuthenticated()
+  }, [])
+
+  const isUserAuthenticated = () => {
+    return http
+      .get('/auth/me')
+      .then((data) => {
+        setCurrentUser(data.data)
+        return true
+      })
+      .catch((error) => {
+        return false
+      })
+  }
 
   const onRegister = (user: User) => {
     return http.post('/auth/register', user).then((data) => data.status)
   }
   const onSignin = (user: User) => {
     return http.post('/auth/login', user).then((data) => {
-      localStorage.setItem('access-token', data.data.accessToken)
-      localStorage.setItem('refresh-token', data.data.refreshToken)
-      setIsUserAuthenticated(true)
       return data.status
     })
   }
 
   const onSignout = () => {
-    localStorage.removeItem('access-token')
-    localStorage.removeItem('refresh-token')
-    setIsUserAuthenticated(false)
-    return http
-      .post('/auth/signout', {
-        refreshToken: localStorage.getItem('refresh-token'),
-      })
-      .then((data) => {
-        console.log(data.data.affected)
-      })
-  }
-
-  const onSignoutAll = () => {
-    localStorage.removeItem('access-token')
-    localStorage.removeItem('refresh-token')
-    setIsUserAuthenticated(false)
-    return http.get('/auth/signout-all').then((data) => {
-      console.log(data.data.affected)
+    return http.get('/auth/signout').then((data) => {
+      return data.data.affected
     })
   }
 
-  const currentUser = () => {
-    return getDecodeToken().data.username as string
+  const onSignoutAll = () => {
+    return http.get('/auth/signout-all').then((data) => {
+      return data.data.affected
+    })
   }
 
   return {
     currentUser,
     onSignout,
     onSignoutAll,
-    isUserAuthenticated,
     onRegister,
     onSignin,
     user,

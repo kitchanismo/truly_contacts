@@ -23,7 +23,7 @@ const Routes = () => {
       <GuestRoute path='/signin' component={SignIn} />
       <Route path='/home' component={Home} />
       <Route path='/not-found' component={NotFound} />
-      <Redirect from='/' exact to='/home' />
+      <Redirect from='/' exact to='/contacts' />
       <Redirect to='/not-found' />
     </Switch>
   )

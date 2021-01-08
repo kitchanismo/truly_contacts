@@ -8,12 +8,9 @@ import styles from './index.module.css'
 const Nav: React.FC = () => {
   const history = useHistory()
 
-  const {
-    isUserAuthenticated,
-    onSignout,
-    onSignoutAll,
-    currentUser,
-  } = React.useContext<AuthProps>(AuthContext)
+  const { onSignout, onSignoutAll, currentUser } = React.useContext<AuthProps>(
+    AuthContext,
+  )
 
   const [activeItem, setActiveItem] = React.useState<string | undefined>()
 
@@ -23,11 +20,11 @@ const Nav: React.FC = () => {
 
   const handleItemClick = (e: any, input: MenuItemProps) => {
     setActiveItem(input.name)
-    history.push('/' + input.name)
+    history.replace('/' + input.name)
   }
 
   const renderMenus = () => {
-    if (isUserAuthenticated)
+    if (currentUser)
       return (
         <>
           <Menu.Menu position='right'>
@@ -40,16 +37,15 @@ const Nav: React.FC = () => {
               Contacts
             </Menu.Item>
             <Menu.Item className={styles.nav}>
-              {nameCapitalize(currentUser())}
+              {nameCapitalize(currentUser.username || '')}
             </Menu.Item>
             <Menu.Item
               className={styles.nav}
               position='right'
               name='logout'
               active={activeItem === 'logout'}
-              onClick={() => {
-                onSignout()
-                history.replace('/')
+              onClick={async () => {
+                if (await onSignout()) window.location.pathname = '/signin'
               }}
             >
               Logout
@@ -59,9 +55,8 @@ const Nav: React.FC = () => {
               position='right'
               name='logoutall'
               active={activeItem === 'logoutall'}
-              onClick={() => {
-                onSignoutAll()
-                history.replace('/')
+              onClick={async () => {
+                if (await onSignoutAll()) window.location.pathname = '/signin'
               }}
             >
               Logout All Devices

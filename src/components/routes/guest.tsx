@@ -10,12 +10,12 @@ const GuestRoute: React.FC<RouteProps> = ({
   render,
   ...rest
 }) => {
-  const { isUserAuthenticated } = useContext<AuthProps>(AuthContext)
+  const { currentUser } = useContext<AuthProps>(AuthContext)
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isUserAuthenticated)
+        if (currentUser)
           return (
             <Redirect
               to={{

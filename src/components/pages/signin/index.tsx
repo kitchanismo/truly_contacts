@@ -19,7 +19,7 @@ const SignIn: React.FC<SignInProps> = () => {
       .then((status) => {
         if (status === 200) {
           setUser({} as User)
-          history.replace('/contacts')
+          window.location.pathname = '/contacts'
         }
       })
       .catch((error) => {
