@@ -47,7 +47,7 @@ const Nav: React.FC = () => {
               name='logout'
               active={activeItem === 'logout'}
               onClick={async () => {
-                if (await onSignout()) window.location.pathname = '/signin'
+                if (await onSignout()) history.push('/signin')
               }}
             >
               Logout
@@ -58,7 +58,7 @@ const Nav: React.FC = () => {
               name='logoutall'
               active={activeItem === 'logoutall'}
               onClick={async () => {
-                if (await onSignoutAll()) window.location.pathname = '/signin'
+                if (await onSignoutAll()) history.push('/signin')
               }}
             >
               Logout All Devices

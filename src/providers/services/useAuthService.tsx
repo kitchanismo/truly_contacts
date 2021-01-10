@@ -29,18 +29,21 @@ const useAuthService = () => {
   }
   const onSignin = (user: User) => {
     return http.post('/auth/login', user).then((data) => {
+      setCurrentUsername(data.data.username)
       return data.status
     })
   }
 
   const onSignout = () => {
     return http.get('/auth/signout').then((data) => {
+      setCurrentUsername('')
       return data.data.affected
     })
   }
 
   const onSignoutAll = () => {
     return http.get('/auth/signout-all').then((data) => {
+      setCurrentUsername('')
       return data.data.affected
     })
   }
