@@ -29,6 +29,7 @@ const useAuthService = () => {
   }
   const onSignin = (user: User) => {
     return http.post('/auth/login', user).then((data) => {
+      console.log(data.data.username)
       setCurrentUsername(data.data.username)
       return data.status
     })
